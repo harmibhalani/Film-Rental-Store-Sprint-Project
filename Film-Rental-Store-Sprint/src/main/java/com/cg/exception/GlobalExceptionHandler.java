@@ -50,16 +50,16 @@ public class GlobalExceptionHandler {
     }
     
     // Handle Resource Not Found Exception
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        Map<String, Object> errorDetails = new HashMap<>();
-        errorDetails.put("timestamp", LocalDateTime.now());
-        errorDetails.put("message", ex.getMessage());
-        errorDetails.put("details", request.getDescription(false));
-
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-    
+//    @ExceptionHandler(ResourceNotFoundException.class)
+//    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+//        Map<String, Object> errorDetails = new HashMap<>();
+//        errorDetails.put("timestamp", LocalDateTime.now());
+//        errorDetails.put("message", ex.getMessage());
+//        errorDetails.put("details", request.getDescription(false));
+//
+//        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+//    }
+//    
     // Handle MethodArgumentNotValidException
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {

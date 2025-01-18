@@ -50,7 +50,7 @@ class StaffTest {
     @Test
     void testCreateStaff_ResourceNotFoundException() {
         StaffCreateDTO staffCreateDTO = new StaffCreateDTO();
-        doThrow(new ResourceNotFoundException("Staff not found"))
+        doThrow(new ResourceNotFoundException())
             .when(staffService).createStaff(staffCreateDTO);
  
         ResponseEntity<String> response = staffController.createStaff(staffCreateDTO);
@@ -175,7 +175,7 @@ class StaffTest {
  
     @Test
     void testAssignStore_ResourceNotFoundException() {
-        doThrow(new ResourceNotFoundException("Store not found"))
+        doThrow(new ResourceNotFoundException())
             .when(staffService).assignStore((short) 1, (short) 2);
  
         ResponseEntity<Object> response = staffController.assignStore((short) 1, (short) 2);

@@ -3,8 +3,6 @@ package com.cg.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,15 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.dto.CategoryDTO;
 import com.cg.dto.FilmActorDTO;
 import com.cg.dto.FilmCategoryDTO;
 import com.cg.dto.FilmDTO;
+import com.cg.dto.FilmDataDTO;
 import com.cg.dto.LanguageDTO;
-import com.cg.model.Actor;
-import com.cg.model.Category;
 import com.cg.model.Film;
-import com.cg.model.Film_Actor;
 import com.cg.model.Language;
 import com.cg.repositories.FilmRepository;
 import com.cg.repositories.LanguageRepository;
@@ -66,21 +61,29 @@ public class FilmController {
 	
 	// Search Films by Title
 	  @GetMapping("/films/title/{title}")
-	    public ResponseEntity<?> getFilmsByTitle(@Valid @PathVariable String title) {
+	    public ResponseEntity<?> getFilmsByTitle(@PathVariable String title) {
 	        try {
-	            List<Film> films = filmService.getFilmsByTitle(title);
+	            List<FilmDataDTO> films = filmService.getFilmsByTitle(title);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 	                    .body("Error fetching films by title: " + e.getMessage());
 	        }
 	    }
+//	  @GetMapping("/films/title/{title}")
+//	    public ResponseEntity<?> getFilmsByTitle(@PathVariable String title) {
+//	        List<FilmDataDTO> films = filmService.getFilmsByTitle(title);
+//	        return ResponseEntity.ok(films);
+//	    }
+
+
+	  
 	  
 	// Search Films by Release Year
 	  @GetMapping("/films/year/{year}")
 	    public ResponseEntity<?> getFilmsByYear(@Valid @PathVariable Integer year) {
 	        try {
-	            List<Film> films = filmService.getFilmsByYear(year);
+	            List<FilmDataDTO> films = filmService.getFilmsByYear(year);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -92,7 +95,7 @@ public class FilmController {
 	  @GetMapping("/films/duration/gt/{duration}")
 	    public ResponseEntity<?> getFilmsByRentalDurationGreaterThan(@Valid @PathVariable Integer duration) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRentalDurationGreaterThan(duration);
+	            List<FilmDataDTO> films = filmService.getFilmsByRentalDurationGreaterThan(duration);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -104,7 +107,7 @@ public class FilmController {
 	  @GetMapping("/films/rate/gt/{rate}")
 	    public ResponseEntity<?> getFilmsByRentalRateGreaterThan(@Valid @PathVariable Double rate) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRentalRateGreaterThan(rate);
+	            List<FilmDataDTO> films = filmService.getFilmsByRentalRateGreaterThan(rate);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -116,7 +119,7 @@ public class FilmController {
 	  @GetMapping("/films/length/gt/{length}")
 	    public ResponseEntity<?> getFilmsByLengthGreaterThan(@Valid @PathVariable Integer length) {
 	        try {
-	            List<Film> films = filmService.getFilmsByLengthGreaterThan(length);
+	            List<FilmDataDTO> films = filmService.getFilmsByLengthGreaterThan(length);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -128,7 +131,7 @@ public class FilmController {
 	  @GetMapping("/films/duration/lt/{duration}")
 	    public ResponseEntity<?> getFilmsByRentalDurationLessThan(@Valid @PathVariable Integer duration) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRentalDurationLessThan(duration);
+	            List<FilmDataDTO> films = filmService.getFilmsByRentalDurationLessThan(duration);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -140,7 +143,7 @@ public class FilmController {
 	  @GetMapping("/films/rate/lt/{rate}")
 	    public ResponseEntity<?> getFilmsByRentalRateLessThan(@Valid @PathVariable Double rate) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRentalRateLessThan(rate);
+	            List<FilmDataDTO> films = filmService.getFilmsByRentalRateLessThan(rate);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -152,7 +155,7 @@ public class FilmController {
 	  @GetMapping("/films/length/lt/{length}")
 	    public ResponseEntity<?> getFilmsByLengthLessThan(@Valid @PathVariable Integer length) {
 	        try {
-	            List<Film> films = filmService.getFilmsByLengthLessThan(length);
+	            List<FilmDataDTO> films = filmService.getFilmsByLengthLessThan(length);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -164,7 +167,7 @@ public class FilmController {
 	  @GetMapping("/films/betweenyear/{from}/{to}")
 	    public ResponseEntity<?> getFilmsBetweenYears(@Valid @PathVariable Integer from,@Valid @PathVariable Integer to) {
 	        try {
-	            List<Film> films = filmService.getFilmsBetweenYears(from, to);
+	            List<FilmDataDTO> films = filmService.getFilmsBetweenYears(from, to);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -176,7 +179,7 @@ public class FilmController {
 	  @GetMapping("/films/rating/lt/{rating}")
 	    public ResponseEntity<?> getFilmsByRatingLessThan(@Valid @PathVariable String rating) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRatingLessThan(rating);
+	            List<FilmDataDTO> films = filmService.getFilmsByRatingLessThan(rating);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -188,7 +191,7 @@ public class FilmController {
 	  @GetMapping("/films/rating/gt/{rating}")
 	    public ResponseEntity<?> getFilmsByRatingGreaterThan(@Valid @PathVariable String rating) {
 	        try {
-	            List<Film> films = filmService.getFilmsByRatingGreaterThan(rating);
+	            List<FilmDataDTO> films = filmService.getFilmsByRatingGreaterThan(rating);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -206,7 +209,7 @@ public class FilmController {
 	                return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                        .body("Language not found: " + langName);
 	            }
-	            List<FilmDTO> films = filmService.getFilmsByLanguage(language);
+	            List<FilmDataDTO> films = filmService.getFilmsByLanguage(language);
 	            return ResponseEntity.ok(films);
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -227,16 +230,30 @@ public class FilmController {
 	    }
 	 
 	//Find all Actors of a Film by Film id
+//	   @GetMapping("/films/{id}/actors")
+//	    public ResponseEntity<?> getActorsByFilmId(@PathVariable Integer id) {
+//	        try {
+//	            List<ActorFilmDTO> actors = filmService.getActorsByFilmId(id);
+//	            return ResponseEntity.ok(actors);
+//	        } catch (Exception e) {
+//	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//	                    .body("Error fetching actors by film ID: " + e.getMessage());
+//	        }
+//	    }
 	   @GetMapping("/films/{id}/actors")
-	    public ResponseEntity<?> getActorsByFilmId(@Valid @PathVariable Integer id) {
-	        try {
-	            List<Actor> actors = filmService.getActorsByFilmId(id);
-	            return ResponseEntity.ok(actors);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                    .body("Error fetching actors by film ID: " + e.getMessage());
-	        }
-	    }
+	   public ResponseEntity<FilmDTO> getActorsByFilmId(@PathVariable Integer id) {
+		   
+		   FilmDTO filmActors = filmService.getActorsByFilmId(id);
+		   
+		   return ResponseEntity.ok(filmActors);
+//	       try {
+//	           List<Film> actors = filmService.getActorsByFilmId(id);
+//	           return ResponseEntity.ok(actors);
+//	       } catch (Exception e) {
+//	           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//	                   .body("Error fetching actors by film ID: " + e.getMessage());
+//	       }
+	   }
 	 
 	 //Find all Films of specified  {category}
 //	 @GetMapping("/films/category/{category}")
@@ -245,19 +262,20 @@ public class FilmController {
 //	       return ResponseEntity.ok(films);
 //	   }
 	   @GetMapping("/films/category/{category}")
-	    public ResponseEntity<?> getFilmsByCategory(@PathVariable String category) {
-	        try {
-	            List<Film> films = filmRepository.findFilmsByCategory(category);
-	            if (films.isEmpty()) {
-	                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                        .body("No films found for category: " + category);
-	            }
-	            return ResponseEntity.ok(films);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                    .body("Error fetching films by category: " + e.getMessage());
-	        }
-	    }
+	   public ResponseEntity<?> getFilmsByCategory(@PathVariable String category) {
+	       try {
+	           List<FilmCategoryDTO> films = filmService.findFilmsByCategory(category);
+	           if (films.isEmpty()) {
+	               return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                       .body("No films found for category: " + category);
+	           }
+	           return ResponseEntity.ok(films);
+	       } catch (Exception e) {
+	           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                   .body("Error fetching films by category: " + e.getMessage());
+	       }
+	   }
+
 
 	 
 	 //Assign  Actor to a Film
@@ -277,12 +295,13 @@ public class FilmController {
 	 //Update Title of a Film
 	   @PutMapping("/films/update/title/{id}")
 	    public ResponseEntity<?> updateFilmTitle(
-	            @Valid @PathVariable("id") Integer filmId,
+	             @PathVariable("id") Integer filmId,
 	            @RequestBody FilmDTO filmDTO) {
 	        try {
 	            FilmDTO updatedFilm = filmService.updateFilmTitle(filmId, filmDTO.getTitle());
 	            return ResponseEntity.ok(updatedFilm);
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 	                    .body("Error updating film title: " + e.getMessage());
 	        }
@@ -346,24 +365,25 @@ public class FilmController {
 	 
 	 //Update Language of a Film
 	   @PutMapping("/films/update/language/{id}")
-	    public ResponseEntity<?> updateLanguageName(
-	            @PathVariable("id") Short languageId,
-	            @RequestBody LanguageDTO request) {
-	        try {
-	            Film updatedFilm = filmService.updateLanguageName(languageId, request.getName());
-	            if (updatedFilm == null) {
-	                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                        .body("No films found for the updated language");
-	            }
-	            return ResponseEntity.ok(updatedFilm);
-	        } catch (EntityNotFoundException e) {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                    .body("Language not found with id: " + languageId);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                    .body("Error updating language name: " + e.getMessage());
-	        }
-	    }
+	   public ResponseEntity<?> updateLanguageName(
+	           @PathVariable("id") Short languageId,
+	           @RequestBody LanguageDTO request) {
+	       try {
+	           List<FilmDTO> updatedFilms = filmService.updateLanguageName(languageId, request.getName());
+	           if (updatedFilms == null || updatedFilms.isEmpty()) {
+	               return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                       .body("No films found for the updated language");
+	           }
+	           return ResponseEntity.ok(updatedFilms); // Return list of updated films
+	       } catch (EntityNotFoundException e) {
+	           return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                   .body("Language not found with id: " + languageId);
+	       } catch (Exception e) {
+	           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                   .body("Error updating language name: " + e.getMessage());
+	       }
+	   }
+
 	 
 	//Update Category of a Film
 //	 @PutMapping("/films/update/category/{id}")

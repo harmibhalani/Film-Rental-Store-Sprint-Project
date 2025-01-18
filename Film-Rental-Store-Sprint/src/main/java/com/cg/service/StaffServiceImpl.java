@@ -41,9 +41,9 @@ public class StaffServiceImpl implements StaffService {
     @Transactional
     public void createStaff(StaffCreateDTO staffCreateDTO) {
         Address address = addressRepository.findById(staffCreateDTO.getAddressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + staffCreateDTO.getAddressId()));
+                .orElseThrow(() -> new ResourceNotFoundException());
         Store store = storeRepository.findById(staffCreateDTO.getStoreId())
-                .orElseThrow(() -> new ResourceNotFoundException("Store not found with id: " + staffCreateDTO.getStoreId()));
+                .orElseThrow(() -> new ResourceNotFoundException());
  
         Staff newStaff = new Staff();
         newStaff.setFirstName(staffCreateDTO.getFirstName());
@@ -64,7 +64,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> getAllStaffByLastName(String lastName) {
         List<Staff> staffList = staffRepository.findByLastName(lastName);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found with last name: " + lastName);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -73,7 +73,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> getAllStaffByFirstName(String firstName) {
         List<Staff> staffList = staffRepository.findByFirstName(firstName);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found with first name: " + firstName);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -82,7 +82,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> getAllStaffByEmail(String email) {
         List<Staff> staffList = staffRepository.findByEmail(email);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found with email: " + email);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -91,7 +91,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> findByStaff_CityName(String city) {
         List<Staff> staffList = staffRepository.findByAddress_City_City(city);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found in city: " + city);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -101,7 +101,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> findByStaff_Country(String country) {
         List<Staff> staffList = staffRepository.findByAddress_City_Country_Country(country);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found in country: " + country);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -111,7 +111,7 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> findByStaff_Phone(String phone) {
         List<Staff> staffList = staffRepository.findByAddress_Phone(phone);
         if (staffList.isEmpty()) {
-            throw new ResourceNotFoundException("No staff found with phone number: " + phone);
+            throw new ResourceNotFoundException();
         }
         return convertToDTO(staffList);
     }
@@ -119,7 +119,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public StaffDTO updateFirstName(Short staffId, String firstName)  {
         Staff staff = staffRepository.findById(staffId)
-                .orElseThrow(() -> new ResourceNotFoundException("Staff not found with id: " + staffId));
+                .orElseThrow(() -> new ResourceNotFoundException());
         staff.setFirstName(firstName);
         staff = staffRepository.save(staff);
  
@@ -138,7 +138,7 @@ public class StaffServiceImpl implements StaffService {
     public StaffDTO updateLastName(Short staffId, String lastName) {
         // Find the staff member by ID, throwing an exception if not found
         Staff staff = staffRepository.findById(staffId)
-                .orElseThrow(() -> new ResourceNotFoundException("Staff not found with id: " + staffId));
+                .orElseThrow(() -> new ResourceNotFoundException());
         // Update the last name
         staff.setLastName(lastName);
         // Save the updated staff entity and convert to DTO
@@ -150,7 +150,7 @@ public class StaffServiceImpl implements StaffService {
     public StaffDTO updateEmail(Short staffId, String email) {
         // Find the staff member by ID, throwing an exception if not found
         Staff staff = staffRepository.findById(staffId)
-                .orElseThrow(() -> new ResourceNotFoundException("Staff not found with id: " + staffId));
+                .orElseThrow(() -> new ResourceNotFoundException());
         // Update the email address
         staff.setEmail(email);
         // Save the updated staff entity and convert to DTO
@@ -162,7 +162,7 @@ public class StaffServiceImpl implements StaffService {
     public Map<String, Object> assignStore(Short staffId, Short storeId) throws ResourceNotFoundException {
         Staff staff = findStaffById(staffId);
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Store not found with id: " + storeId));
+                .orElseThrow(() -> new ResourceNotFoundException());
         staff.setStore(store);
         Staff updatedStaff = staffRepository.save(staff);
         StaffDTO staffDTO = new StaffDTO(
@@ -189,14 +189,14 @@ public class StaffServiceImpl implements StaffService {
             // Save and convert to DTO after updating phone number.
             return saveAndConvertToDTO(staff);
         } else {
-            throw new ResourceNotFoundException("Address not found for the given Staff ID: " + staffId);
+            throw new ResourceNotFoundException();
         }
     }
  
     // Helper method to find Staff by ID with exception handling.
     private Staff findStaffById(Short staffId) throws ResourceNotFoundException {
         return staffRepository.findById(staffId)
-                .orElseThrow(() -> new ResourceNotFoundException("Staff not found with id: " + staffId));
+                .orElseThrow(() -> new ResourceNotFoundException());
     }
  
     // Helper method to save Staff and convert to DTO

@@ -79,8 +79,14 @@ public class ActorServiceImpl implements ActorService {
                         film.getTitle(),
                         film.getDescription(),
                         film.getReleaseYear(),
+                        film.getLanguage(),
+                        film.getOriginalLanguageId(),
+                        film.getRentalRate(),
                         film.getRating(),
-                        film.getLength()
+                        film.getRentalDuration(),
+                        film.getLength(),
+                        film.getSpecialFeatures(),
+                        film.getReplacementCost() 
                 ))
                 .collect(Collectors.toList());
  

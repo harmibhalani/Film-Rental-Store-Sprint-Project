@@ -51,7 +51,7 @@ public class RentalController {
         try {
             List<String> topFilms = rentalService.getTopTenFilms();
             if (topFilms.isEmpty()) {
-                throw new ResourceNotFoundException("No films found in the system");
+                throw new ResourceNotFoundException();
             }
             return ResponseEntity.ok(topFilms);
         } catch (Exception ex) {
@@ -67,7 +67,7 @@ public class RentalController {
         try {
             List<String> topFilms = rentalService.getTopTenFilmsByStoreId(storeId);
             if (topFilms.isEmpty()) {
-                throw new ResourceNotFoundException("No films found for store ID: " + storeId);
+                throw new ResourceNotFoundException();
             }
             return ResponseEntity.ok(topFilms);
         } catch (ResourceNotFoundException ex) {
@@ -85,7 +85,7 @@ public class RentalController {
         try {
             List<RentalDTO> dueRentals = rentalService.getDueRentalsByStoreId(storeId);
             if (dueRentals.isEmpty()) {
-                throw new ResourceNotFoundException("No due rentals found for store ID: " + storeId);
+                throw new ResourceNotFoundException();
             }
             return ResponseEntity.ok(dueRentals);
         } catch (ResourceNotFoundException ex) {

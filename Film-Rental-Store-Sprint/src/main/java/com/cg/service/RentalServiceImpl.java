@@ -23,7 +23,7 @@ public class RentalServiceImpl implements RentalService {
     public List<RentalDTO> getRentalsByCustomerId(Short customerId) {
         List<Rental> rentals = rentalRepository.findByCustomerId(customerId);
         if (rentals.isEmpty()) {
-            throw new ResourceNotFoundException("No rentals found for customer ID: " + customerId);
+            throw new ResourceNotFoundException();
         }
         return rentals.stream()
                 .map(rental -> new RentalDTO(
@@ -84,7 +84,7 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public RentalDTO updateReturnDate(Integer rentalId, LocalDateTime returnDate) {
         Rental existingRental = rentalRepository.findById(rentalId)
-            .orElseThrow(() -> new ResourceNotFoundException("Invalid rental ID: " + rentalId));
+            .orElseThrow(() -> new ResourceNotFoundException());
         existingRental.setReturnDate(returnDate); 
 
         Rental updatedRental = rentalRepository.save(existingRental);

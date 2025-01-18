@@ -1,6 +1,27 @@
 package com.cg.model;
 
-import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
@@ -10,23 +31,18 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "film")
 public class Film {
 
     @Id
+//    @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", columnDefinition = "SMALLINT UNSIGNED")
     private Long filmId;
     
+//    @JsonProperty("title")
     @NotBlank(message = "Title is required and cannot be blank")
     @Size(max = 128, message = "Title cannot exceed 128 characters")
     @Column(name = "title", length = 128, nullable = false)
@@ -81,8 +97,8 @@ public class Film {
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Film_Actor> filmActors = new HashSet<>();
     
-//    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
-//    private List<Film_Category> filmCategories;
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
+    private List<Film_Category> filmCategories;
     
 //    @ManyToMany
 //    @JoinTable(name = "Film_Category", 
@@ -180,7 +196,7 @@ public class Film {
        this.rentalDuration = rentalDuration;
    }
 
-   public BigDecimal getRentalRate() {
+   public @NotNull(message = "Rental rate is required") @DecimalMin(value = "0.00", inclusive = false, message = "Rental rate must be greater than 0.00") @Digits(integer = 2, fraction = 2, message = "Rental rate must be a valid decimal with 2 digits before and after the decimal point") BigDecimal getRentalRate() {
        return rentalRate;
    }
 
@@ -262,4 +278,12 @@ public class Film {
       Film other = (Film) obj;
       return Objects.equals(filmId, other.filmId);
   }
+
+public List<Film_Category> getFilmCategories() {
+	return filmCategories;
+}
+
+public void setFilmCategories(List<Film_Category> filmCategories) {
+	this.filmCategories = filmCategories;
+}
 }

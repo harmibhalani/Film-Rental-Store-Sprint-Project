@@ -46,10 +46,10 @@ public class StoreServiceImpl implements StoreService {
 	  @Override
 	    public StoreDTO addStore(StoreCreateDTO storeCreateDTO) {
 	        Address address = addressRepository.findById(storeCreateDTO.getAddressId())
-	                .orElseThrow(() -> new ResourceNotFoundException("Address not found with ID: " + storeCreateDTO.getAddressId()));
+	                .orElseThrow(() -> new ResourceNotFoundException());
  
 	        Staff manager = staffRepository.findById(storeCreateDTO.getManagerId())
-	                .orElseThrow(() -> new ResourceNotFoundException("Manager not found with ID: " + storeCreateDTO.getManagerId()));
+	                .orElseThrow(() -> new ResourceNotFoundException());
  
 	        Store store = new Store();
 	        store.setAddress(address);
@@ -65,12 +65,12 @@ public class StoreServiceImpl implements StoreService {
 	  @Override
 	    public List<StoreDTO> findStoresByCity(String cityName) {
 	        if (cityName == null || cityName.trim().isEmpty()) {
-	            throw new ResourceNotFoundException("City name cannot be empty");
+	            throw new ResourceNotFoundException();
 	        }
  
 	        List<Store> stores = storeRepository.findByAddressCityCityIgnoreCaseContaining(cityName.trim());
 	        if (stores.isEmpty()) {
-	            throw new ResourceNotFoundException("No stores found in city: " + cityName);
+	            throw new ResourceNotFoundException();
 	        }
  
 	        return stores.stream().map(this::convertToDTO).collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class StoreServiceImpl implements StoreService {
 	    public List<StoreDTO> findStoresByCountry(String country) {
 	        List<Store> stores = storeRepository.findByAddressCityCountryCountryIgnoreCaseContaining(country);
 	        if (stores.isEmpty()) {
-	            throw new ResourceNotFoundException("No stores found in country: " + country);
+	            throw new ResourceNotFoundException();
 	        }
 	        return stores.stream().map(this::convertToDTO).collect(Collectors.toList());
 	    }
@@ -90,7 +90,7 @@ public class StoreServiceImpl implements StoreService {
 	    public StoreDTO findStoreByPhone(String phone) {
 	        Store store = storeRepository.findByAddressPhone(phone);
 	        if (store == null) {
-	            throw new ResourceNotFoundException("No store found with phone number: " + phone);
+	            throw new ResourceNotFoundException();
 	        }
 	        return convertToDTO(store);
 	    }
@@ -98,7 +98,7 @@ public class StoreServiceImpl implements StoreService {
 	  @Override
 	    public void updateStorePhone(Short storeId, String phone) {
 	        Store store = storeRepository.findById(storeId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Invalid store ID: " + storeId));
+	                .orElseThrow(() -> new ResourceNotFoundException());
  
 	        store.getAddress().setPhone(phone); // Assuming Address is fetched through Store
 	        storeRepository.save(store);
@@ -109,10 +109,10 @@ public class StoreServiceImpl implements StoreService {
 	    @Transactional
 	    public StoreDTO assignManagerToStore(Short storeId, Short managerStaffId) {
 	        Store store = storeRepository.findById(storeId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Invalid store ID: " + storeId));
+	                .orElseThrow(() -> new ResourceNotFoundException());
  
 	        Staff manager = staffRepository.findById(managerStaffId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Invalid manager staff ID: " + managerStaffId));
+	                .orElseThrow(() -> new ResourceNotFoundException());
  
 	        store.setManager(manager);
 	        return convertToDTO(storeRepository.save(store));
@@ -122,7 +122,7 @@ public class StoreServiceImpl implements StoreService {
 	    public List<StaffDTO> findStaffByStoreId(Short storeId) {
 	        List<Staff> staffList = storeRepository.findStaffByStoreId(storeId);
 	        if (staffList.isEmpty()) {
-	            throw new ResourceNotFoundException("No staff found for store ID: " + storeId);
+	            throw new ResourceNotFoundException();
 	        }
 	        return staffList.stream().map(this::convertStaffToDTO).collect(Collectors.toList());
 	    }
@@ -131,7 +131,7 @@ public class StoreServiceImpl implements StoreService {
 	    public List<CustomerDTO> findCustomersByStoreId(Short storeId) {
 	        List<Customer> customerList = storeRepository.findCustomersByStoreId(storeId);
 	        if (customerList.isEmpty()) {
-	            throw new ResourceNotFoundException("No customers found for store ID: " + storeId);
+	            throw new ResourceNotFoundException();
 	        }
 	        return customerList.stream().map(this::convertCustomerToDTO).collect(Collectors.toList());
 	    }
@@ -140,7 +140,7 @@ public class StoreServiceImpl implements StoreService {
 	    public StaffDTO findManagerByStoreId(Short storeId) {
 	        Staff manager = storeRepository.findManagerByStoreId(storeId);
 	        if (manager == null) {
-	            throw new ResourceNotFoundException("No manager found for store ID: " + storeId);
+	            throw new ResourceNotFoundException();
 	        }
 	        return convertStaffToDTO(manager);
 	    }

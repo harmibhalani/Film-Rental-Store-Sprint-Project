@@ -59,7 +59,7 @@ public class InventoryController {
         try {
             List<InventoryDTO> inventories = inventoryService.getInventoriesByFilmId(id);
             if (inventories.isEmpty()) {
-                throw new ResourceNotFoundException("No inventories found for film ID: " + id);
+                throw new ResourceNotFoundException();
             }
             return ResponseEntity.ok(inventories);
         } catch (ResourceNotFoundException e) {
