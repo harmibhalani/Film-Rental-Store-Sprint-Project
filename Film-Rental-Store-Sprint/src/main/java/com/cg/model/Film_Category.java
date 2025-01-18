@@ -1,23 +1,39 @@
 package com.cg.model;
-
-import jakarta.persistence.*;
+ 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+ 
 @Entity
 @Table(name = "film_category")
 public class Film_Category {
     
     @Id
     @Column(name = "film_id", columnDefinition = "SMALLINT UNSIGNED")
+    @NotNull(message = "Film ID cannot be null")
+    @Min(value = 1, message = "Film ID must be at least 1")
     private Integer filmId;
     
     @Id
     @Column(name = "category_id", columnDefinition = "TINYINT UNSIGNED")
+    @NotNull(message = "Category ID cannot be null")
+    @Min(value = 1, message = "Category ID must be at least 1")
     private Integer categoryId;
     
     @Column(name = "last_update", nullable = false, 
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @NotNull(message = "Last update cannot be null")
     private LocalDateTime lastUpdate;
     
     @ManyToOne(fetch = FetchType.LAZY)

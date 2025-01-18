@@ -9,13 +9,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "language")
 public class Language {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id", columnDefinition = "TINYINT UNSIGNED")
     private Short languageId;
 
     @NotNull(message = "Name is required")
-    @Size(max = 20)
+    @Size(max = 20, message = "Name can be at most 20 characters long")
     @Column(name = "name", nullable = false, columnDefinition = "CHAR(20)")
     private String name;
 
@@ -87,4 +88,9 @@ public class Language {
                ", lastUpdate=" + lastUpdate +
                '}';
     }
+
+	public Language orElseThrow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

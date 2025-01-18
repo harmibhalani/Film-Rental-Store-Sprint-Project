@@ -1,35 +1,36 @@
 package com.cg.dto;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+ 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 public class PaymentDTO {
-    private LocalDate date;
-    private BigDecimal totalRevenue;
-
+	 @NotNull(message = "Payment date is required")
+    private LocalDate paymentDate;
+	 @NotNull(message = "Amount is required")
+	 @Positive(message = "Amount must be positive")
+    private BigDecimal amount ;
     // No-argument constructor
     public PaymentDTO() {}
-
     // Constructor must exactly match the types from the query
-    public PaymentDTO(LocalDate date, BigDecimal totalRevenue) {
-        this.date = date;
-        this.totalRevenue = totalRevenue;
+    public PaymentDTO(LocalDate paymentDate, BigDecimal amount) {
+        this.paymentDate = paymentDate;
+        this.amount = amount;
     }
-
-    // Getters and Setters
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public BigDecimal getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(BigDecimal totalRevenue) {
-        this.totalRevenue = totalRevenue;
-    }
+ 
+	public LocalDate getPaymentDate() {
+		return paymentDate;
+	}
+ 
+	public void setPaymentDate(LocalDate paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+ 
+	public BigDecimal getAmount() {
+		return amount;
+	}
+ 
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 }

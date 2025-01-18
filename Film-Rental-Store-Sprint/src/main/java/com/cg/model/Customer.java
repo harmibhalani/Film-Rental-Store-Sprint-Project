@@ -1,6 +1,6 @@
 package com.cg.model;
- 
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Email;
  
 @Entity
 @Table(name = "customer")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
  
     @Id
@@ -16,7 +17,7 @@ public class Customer {
     private Short customerId;
  
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
  
@@ -35,7 +36,7 @@ public class Customer {
     @Column(name = "email", length = 50)
     private String email;
  
-    @NotNull
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
@@ -47,18 +48,19 @@ public class Customer {
     @NotNull
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate;
- 
+    
+    @NotNull
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
  
-    // Default constructor
+   
     public Customer() {
         this.createDate = LocalDateTime.now();
         this.lastUpdate = LocalDateTime.now();
         this.active = true;
     }
  
-    // Getters and Setters
+    
     public Short getCustomerId() {
         return customerId;
     }
@@ -131,3 +133,4 @@ public class Customer {
         this.lastUpdate = lastUpdate;
     }
 }
+ 

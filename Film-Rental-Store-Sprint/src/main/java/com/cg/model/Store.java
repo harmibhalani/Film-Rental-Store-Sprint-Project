@@ -21,7 +21,7 @@ public class Store {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_staff_id", 
                 nullable = false, 
-                unique = true,
+               
                 foreignKey = @ForeignKey(name = "fk_store_staff"))
     private Staff manager;
 

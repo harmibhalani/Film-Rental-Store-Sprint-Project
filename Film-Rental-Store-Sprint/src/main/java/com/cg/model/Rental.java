@@ -19,13 +19,13 @@ public class Rental {
     private Integer inventoryId;
     
     @Column(name = "customer_id", nullable = false, columnDefinition = "SMALLINT UNSIGNED")
-    private Integer customerId;
+    private Short customerId;
     
     @Column(name = "return_date")
     private LocalDateTime returnDate;
     
     @Column(name = "staff_id", nullable = false, columnDefinition = "TINYINT UNSIGNED")
-    private Integer staffId;
+    private Short staffId;
     
     @Column(name = "last_update", nullable = false, updatable = false, 
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
@@ -48,7 +48,7 @@ public class Rental {
     }
 
     // Constructor with required fields
-    public Rental(LocalDateTime rentalDate, Integer inventoryId, Integer customerId, Integer staffId) {
+    public Rental(LocalDateTime rentalDate, Integer inventoryId, Short customerId, Short staffId) {
         this.rentalDate = rentalDate;
         this.inventoryId = inventoryId;
         this.customerId = customerId;
@@ -57,7 +57,7 @@ public class Rental {
 
     // Constructor with all fields
     public Rental(Integer rentalId, LocalDateTime rentalDate, Integer inventoryId, 
-                 Integer customerId, LocalDateTime returnDate, Integer staffId, 
+                 Short customerId, LocalDateTime returnDate, Short staffId, 
                  LocalDateTime lastUpdate) {
         this.rentalId = rentalId;
         this.rentalDate = rentalDate;
@@ -81,7 +81,7 @@ public class Rental {
         return inventoryId;
     }
 
-    public Integer getCustomerId() {
+    public Short getCustomerId() {
         return customerId;
     }
 
@@ -89,7 +89,7 @@ public class Rental {
         return returnDate;
     }
 
-    public Integer getStaffId() {
+    public Short getStaffId() {
         return staffId;
     }
 
@@ -122,16 +122,16 @@ public class Rental {
         this.inventoryId = inventoryId;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(Short short1) {
+        this.customerId = short1;
     }
 
     public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 
-    public void setStaffId(Integer staffId) {
-        this.staffId = staffId;
+    public void setStaffId(Short short1) {
+        this.staffId = short1;
     }
 
     public void setLastUpdate(LocalDateTime lastUpdate) {

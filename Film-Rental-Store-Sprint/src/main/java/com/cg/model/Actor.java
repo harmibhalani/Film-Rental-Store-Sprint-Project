@@ -1,14 +1,18 @@
 package com.cg.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -36,6 +40,9 @@ public class Actor {
     @Column(name = "last_update", nullable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime lastUpdate;
+    
+    @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Film_Actor> filmActors = new HashSet<>();
 
     // Constructors
     public Actor() {}
@@ -77,7 +84,16 @@ public class Actor {
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+    
+    public Set<Film_Actor> getFilmActors() {
+        return filmActors;
+    }
 
+    public void setFilmActors(Set<Film_Actor> filmActors) {
+        this.filmActors = filmActors;
+    }
+    
+    //toString Method
     @Override
     public String toString() {
         return "Actor{" +
@@ -87,4 +103,6 @@ public class Actor {
                 ", lastUpdate=" + lastUpdate +
                 '}';
     }
+
+
 }
