@@ -3,6 +3,7 @@ package com.cg.repositories;
 import com.cg.dto.ActorDTO;
 import com.cg.model.Actor;
 import com.cg.model.Film;
+import com.cg.model.Film_Actor;
 
 import java.util.List;
 
@@ -21,8 +22,8 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	List<Actor> findByLastNameIgnoreCase(String lastName);
 
 	//	Search Films of	an Actor by	Actor Id
-	@Query("SELECT f FROM Film f JOIN Film_Actor fa ON f.filmId = fa.filmId WHERE fa.actorId = :actorId")
-	List<Film> findFilmsByActorId(@Param("actorId") Integer actorId);
+	@Query("SELECT f FROM Film f JOIN Film_Actor fa on f.id = fa.filmId WHERE fa.actorId = :actorId")
+    List<Film> findFilmsByActorId(@Param("actorId") Integer actorId);
 
 	//	Find top 10	Actors by Film Count
 	@Query("SELECT new com.cg.dto.ActorDTO(a.id, a.firstName, a.lastName, COUNT(fa.filmId)) "

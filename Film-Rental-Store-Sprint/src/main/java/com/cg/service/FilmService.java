@@ -59,6 +59,7 @@ public interface FilmService {
 	//Find all Actors of a Film by Film id
 	 FilmDTO getActorsByFilmId(Integer filmId);
 	 
+
 	//Find all Films of specified  {category}
 	 List<FilmCategoryDTO> findFilmsByCategory(String category);
 	 

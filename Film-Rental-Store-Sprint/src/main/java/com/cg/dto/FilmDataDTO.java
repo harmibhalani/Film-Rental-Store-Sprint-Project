@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 import com.cg.model.Language;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+
 public class FilmDataDTO {
 
     private long filmId;
@@ -19,11 +23,40 @@ public class FilmDataDTO {
     // Getters and setters for all fields
     
     
-    public long getFilmId() {
+//    public FilmDataDTO(Long filmId2, String title2, String description2, Integer releaseYear2, Language language,
+//			Short originalLanguageId,
+//		 BigDecimal rentalRate2,
+//			String rating2, Short rentalDuration2, Integer length2, String specialFeatures, Double replacementCost) {
+//		this.filmId = filmId2;
+//		this.title = title2;
+//		this.description = description2;
+//		this.releaseYear = releaseYear2;
+//		this.
+//		
+//	}
+
+	public long getFilmId() {
         return filmId;
     }
 
-    public Integer getLength() {
+    public FilmDataDTO() {
+		super();
+	}
+
+	public FilmDataDTO(long filmId, String title, String description, Integer releaseYear, BigDecimal rentalRate,
+			String rating, Short rentalDuration, Integer length) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.rentalRate = rentalRate;
+		this.rating = rating;
+		this.rentalDuration = rentalDuration;
+		this.length = length;
+	}
+
+	public Integer getLength() {
 		return length;
 	}
 

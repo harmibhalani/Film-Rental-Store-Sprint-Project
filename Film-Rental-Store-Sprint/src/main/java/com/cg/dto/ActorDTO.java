@@ -18,9 +18,6 @@ public class ActorDTO {
     
     @NotBlank(message = "First name is mandatory")
     @Size(max = 45, message = "First name cannot exceed 45 characters")
-    
-    @NotBlank(message = "First name is mandatory")
-    @Size(max = 45, message = "First name cannot exceed 45 characters")
     private String firstName;
     
     @NotBlank(message = "Last name is mandatory")
@@ -93,8 +90,8 @@ public class ActorDTO {
     public List<FilmDTO> getFilms() {
         return films;
     }
-    public void setFilms(List<FilmDTO> films) {
-        this.films = films;
+    public void setFilms(List<FilmDTO> filmDTOs) {
+        this.films = filmDTOs;
     }
     public Actor toEntity() {
         Actor actor = new Actor();

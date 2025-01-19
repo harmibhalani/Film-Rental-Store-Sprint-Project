@@ -1,8 +1,7 @@
 package com.cg.controller;
  
-import java.util.ArrayList;
 import java.util.List;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
- 
-import com.cg.service.ActorService;
-import jakarta.validation.Valid;
+
 import com.cg.dto.ActorDTO;
+import com.cg.dto.ActorDataDTO;
 import com.cg.dto.FilmActorDTO;
+import com.cg.dto.FilmDTO;
+import com.cg.dto.FilmDataDTO;
 import com.cg.dto.UpdateActorFilmRequestDTO;
 import com.cg.exception.ActorAlreadyExistsException;
-import com.cg.exception.ActorNotFoundException;
-import com.cg.model.Actor;
+import com.cg.service.ActorService;
+
+import jakarta.validation.Valid;
  
 @RestController
 @RequestMapping("/api")
@@ -34,24 +35,26 @@ public class ActorController {
  
 	// Search Actors by Last Name
 	@GetMapping("/actors/lastname/{ln}")
-    public ResponseEntity<?> getActorsByLastName(@PathVariable("ln") String lastName) {
-        if (lastName == null || lastName.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Last name must not be empty.");
-        }
-        List<Actor> actors = actorService.getActorsByLastName(lastName);
-        if (actors.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body("No actors found with the last name: " + lastName);
-        }
-        return ResponseEntity.ok(actors);
-    }
+	public ResponseEntity<?> getActorsByLastName(@PathVariable("ln") String lastName) {
+	    if (lastName == null || lastName.trim().isEmpty()) {
+	        return ResponseEntity.badRequest().body("Last name must not be empty.");
+	    }
+	    
+	    List<ActorDataDTO> actors = actorService.getActorsByLastName(lastName);
+	    if (actors.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No actors found with the last name: " + lastName);
+	    }
+	    return ResponseEntity.ok(actors);
+	}
+
  
     @GetMapping("/actors/firstname/{fn}")
     public ResponseEntity<?> getActorsByFirstName(@PathVariable("fn") String firstName) {
         if (firstName == null || firstName.trim().isEmpty()) {
             return ResponseEntity.badRequest().body("First name must not be empty.");
         }
-        List<Actor> actors = actorService.getActorsByFirstName(firstName);
+        List<ActorDataDTO> actors = actorService.getActorsByFirstName(firstName);
         if (actors.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                                  .body("No actors found with the first name: " + firstName);
@@ -60,12 +63,11 @@ public class ActorController {
     }
  
 	// Search Films of an Actor by Actor Id
-	@GetMapping("/actors/{id}/films")
-	public ResponseEntity<ActorDTO> getFilmsByActorId(@PathVariable("id") Integer actorId) {
-		ActorDTO actorFilms = actorService.getFilmsByActorId(actorId);
- 
-		return ResponseEntity.ok(actorFilms);
-	}
+    @GetMapping("/actors/{id}/films")
+    public ResponseEntity<?> getFilmsByActorId(@PathVariable Integer id) {
+        ActorDTO films = actorService.getFilmsByActorId(id);
+        return ResponseEntity.ok(films);
+    }
  
 	// Find top 10 Actors by Film Count
 	@GetMapping("/actors/toptenbyfilmcount")
@@ -88,7 +90,7 @@ public class ActorController {
  
 	// Update Last Name of an Actor
 	@PutMapping("/actors/update/lastname/{id}")
-	public ResponseEntity<ActorDTO> updateLastName(@Valid @PathVariable Integer id, @Valid @RequestBody UpdateActorFilmRequestDTO request) {
+	public ResponseEntity<ActorDTO> updateLastName(@Valid @PathVariable Integer id, @RequestBody UpdateActorFilmRequestDTO request) {
 		ActorDTO updatedActor = actorService.updateLastName(id, request.getLastName());
  
 		return ResponseEntity.ok(updatedActor);
@@ -96,7 +98,7 @@ public class ActorController {
  
 	// Update First Name of an Actor
 	@PutMapping("/actors/update/firstname/{id}")
-	public ResponseEntity<ActorDTO> updateFirstName(@Valid @PathVariable Integer id, @Valid @RequestBody UpdateActorFilmRequestDTO request) {
+	public ResponseEntity<ActorDTO> updateFirstName(@Valid @PathVariable Integer id, @RequestBody UpdateActorFilmRequestDTO request) {
 		ActorDTO updatedActor = actorService.updateFirstName(id, request.getFirstName());
  
 		return ResponseEntity.ok(updatedActor);
@@ -106,7 +108,7 @@ public class ActorController {
 	@PutMapping("/actors/{actorId}/film")
 	public ResponseEntity<?> assignFilmToActor(
 			@PathVariable Integer actorId,
-			@Valid @RequestBody FilmActorDTO filmActorDTO) {
+			 @RequestBody FilmActorDTO filmActorDTO) {
  
 		FilmActorDTO assignedFilm = actorService.assignFilmToActor(actorId, filmActorDTO.getFilmId());
  

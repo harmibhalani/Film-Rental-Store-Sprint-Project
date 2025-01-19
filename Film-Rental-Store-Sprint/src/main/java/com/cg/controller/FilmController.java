@@ -229,17 +229,7 @@ public class FilmController {
 	        }
 	    }
 	 
-	//Find all Actors of a Film by Film id
-//	   @GetMapping("/films/{id}/actors")
-//	    public ResponseEntity<?> getActorsByFilmId(@PathVariable Integer id) {
-//	        try {
-//	            List<ActorFilmDTO> actors = filmService.getActorsByFilmId(id);
-//	            return ResponseEntity.ok(actors);
-//	        } catch (Exception e) {
-//	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//	                    .body("Error fetching actors by film ID: " + e.getMessage());
-//	        }
-//	    }
+//	//Find all Actors of a Film by Film id
 	   @GetMapping("/films/{id}/actors")
 	   public ResponseEntity<FilmDTO> getActorsByFilmId(@PathVariable Integer id) {
 		   
@@ -256,11 +246,6 @@ public class FilmController {
 	   }
 	 
 	 //Find all Films of specified  {category}
-//	 @GetMapping("/films/category/{category}")
-//	   public ResponseEntity<List<FilmDTO>> getFilmsByCategory(@PathVariable String category) {
-//	       List<FilmDTO> films = filmService.getFilmsByCategory(category);
-//	       return ResponseEntity.ok(films);
-//	   }
 	   @GetMapping("/films/category/{category}")
 	   public ResponseEntity<?> getFilmsByCategory(@PathVariable String category) {
 	       try {

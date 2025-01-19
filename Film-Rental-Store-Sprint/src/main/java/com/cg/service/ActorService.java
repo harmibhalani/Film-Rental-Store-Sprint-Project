@@ -3,8 +3,12 @@ package com.cg.service;
 import java.util.List;
  
 import com.cg.dto.ActorDTO;
+import com.cg.dto.ActorDataDTO;
 import com.cg.dto.FilmActorDTO;
+import com.cg.dto.FilmDTO;
+import com.cg.dto.FilmDataDTO;
 import com.cg.model.Actor;
+import com.cg.model.Film_Actor;
 import com.cg.exception.ActorNotFoundException;
 import com.cg.exception.FilmNotFoundException;
 import com.cg.exception.InvalidActorDataException;
@@ -13,12 +17,13 @@ import com.cg.exception.ActorAlreadyExistsException;
 public interface ActorService {
 	
     // Search Actors by Last Name
-    List<Actor> getActorsByLastName(String lastName) throws ActorNotFoundException;
+    List<ActorDataDTO> getActorsByLastName(String lastName) throws ActorNotFoundException;
+    
     // Search Actors by First Name
-    List<Actor> getActorsByFirstName(String firstName) throws ActorNotFoundException;
+    List<ActorDataDTO> getActorsByFirstName(String firstName) throws ActorNotFoundException;
  
     // Search Films of an Actor by Actor Id
-    ActorDTO getFilmsByActorId(Integer actorId) throws ActorNotFoundException;
+    ActorDTO getFilmsByActorId(Integer actorId);
  
     // Find top 10 Actors by Film Count
     List<ActorDTO> getTopTenActorsByFilmCount() throws ActorNotFoundException;
