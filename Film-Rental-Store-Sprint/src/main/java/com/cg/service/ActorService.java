@@ -39,4 +39,7 @@ public interface ActorService {
  
     // Assign Film to Actor
     FilmActorDTO assignFilmToActor(Integer actorId, Integer filmId) throws ActorNotFoundException, FilmNotFoundException, InvalidActorDataException;
+
+    //Get all actors
+	List<ActorDataDTO> getAllActors();
 }

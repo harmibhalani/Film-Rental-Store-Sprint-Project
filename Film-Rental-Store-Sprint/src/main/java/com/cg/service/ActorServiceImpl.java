@@ -187,4 +187,13 @@ public class ActorServiceImpl implements ActorService {
 			throw new FilmAssignmentException("Error assigning film to actor: " + e.getMessage());
 		}
 	}
+	
+	//Get all actors
+	@Override
+    public List<ActorDataDTO> getAllActors() {
+        // Fetch all actors from the repository and convert them to DTOs in one step
+        return actorRepository.findAll().stream()
+                .map(actor -> new ActorDataDTO(actor.getId(), actor.getFirstName(), actor.getLastName(), actor.getLastUpdate()))
+                .collect(Collectors.toList());
+    }
 }

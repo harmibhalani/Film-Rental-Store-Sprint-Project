@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Lists</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/filmManagement.css}">
+    <link rel="stylesheet" th:href="@{/css/filmCards.css}">
+</head>
+ 
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <h1>Films</h1>
+           
+        </header>
+ 
+        <!-- Loading Indicator -->
+        <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+        </div>
+ 
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message hidden">
+            <div class="error-content">
+                <span id="errorText"></span>
+            </div>
+        </div>
+ 
+        <!-- Film Cards Container -->
+        <div class="film-cards-container" id="filmCardsContainer">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </div>
+ 
+    <script th:src="@{/js/filmCards.js}"></script>
+</body>
+ 
+</html>

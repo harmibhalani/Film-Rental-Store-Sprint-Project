@@ -3,6 +3,7 @@ package com.cg.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.cg.dto.ActorDataDTO;
 import com.cg.dto.ActorFilmDTO;
 import com.cg.dto.FilmActorDTO;
 import com.cg.dto.FilmCategoryDTO;
@@ -12,6 +13,9 @@ import com.cg.model.Film;
 import com.cg.model.Language;
 
 public interface FilmService {
+	
+	// Get all Films
+	List<FilmDataDTO> getAllFilms();
 	
 	 //Add new Film object in DB
 	 Film addFilm(Film film);
@@ -89,6 +93,10 @@ public interface FilmService {
 //	 FilmCategoryDTO updateFilmCategory(Integer filmId, Integer categoryId);
 
 	FilmCategoryDTO updateFilmCategory(Integer filmId, Long categoryId);
+
+	
+
+
 
 
 }

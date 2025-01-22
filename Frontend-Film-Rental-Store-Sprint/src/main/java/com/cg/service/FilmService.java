@@ -6,7 +6,8 @@ import com.cg.model.Film;
 
 public interface FilmService {
 	
-//	List<Film> getFilmsByTitle(String title) throws Exception;
+	//Get all films
+	List<Film> getAllFilms();
 	
 	//Get method to search film by title
 	List<Film> searchByTitle(String title) throws Exception;
@@ -19,7 +20,5 @@ public interface FilmService {
 
 	//Get method to search film by release year
     List<Film> searchByYear(Integer year) throws Exception;
-	
-	
-//	 Film addFilm(Film film);
+
 }

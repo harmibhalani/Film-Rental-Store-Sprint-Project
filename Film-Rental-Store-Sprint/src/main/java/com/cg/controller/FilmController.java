@@ -46,6 +46,16 @@ public class FilmController {
 	@Autowired
     private CategoryService categoryService;
 	
+	//Get all Films
+	@GetMapping("/films/allfilms")
+	public ResponseEntity<?> getAllActors() {
+	    List<FilmDataDTO> actors = filmService.getAllFilms();
+	    if (actors.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No actors found.");
+	    }
+	    return ResponseEntity.ok(actors);
+	}
 	
 	 //Add new Film object in DB
 	  @PostMapping("/films/post")

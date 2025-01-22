@@ -1,0 +1,93 @@
+/* Film Cards Container */
+.film-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+ 
+/* Individual Film Card */
+.film-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+ 
+.film-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+ 
+/* Card Header */
+.film-card-header {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+}
+ 
+.film-card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+ 
+.film-id-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    backdrop-filter: blur(4px);
+}
+ 
+/* Card Body */
+.film-card-body {
+    padding: 1.5rem;
+}
+ 
+.film-info-item {
+    margin-bottom: 1rem;
+}
+ 
+.info-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+ 
+.info-value {
+    font-size: 1.125rem;
+    color: #111827;
+    font-weight: 500;
+}
+ 
+/* Loading Animation */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 
+.film-card {
+    animation: cardFadeIn 0.5s ease forwards;
+}
+ 
+/* Responsive Design */
+@media (max-width: 640px) {
+    .film-cards-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}

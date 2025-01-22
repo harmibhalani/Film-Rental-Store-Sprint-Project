@@ -14,4 +14,6 @@ public interface ActorService {
     Actor updateActorLastName(Integer actorId, Actor actor);
 
 	Actor createActor(Actor actorDTO);
+
+	List<Actor> getAllActors();
 }

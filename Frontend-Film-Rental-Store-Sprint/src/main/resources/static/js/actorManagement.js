@@ -7,6 +7,9 @@ const loadingState = document.getElementById('loadingState');
 const errorMessage = document.getElementById('errorMessage');
 const actorTable = document.getElementById('actorTable');
 
+const actorCardContainer = document.getElementById('actorCardContainer');
+const viewAllActorsBtn = document.getElementById('viewAllActorsBtn');
+
 // Constants
 const BACKEND_URL = 'http://localhost:4311';
 const FRONTEND_URL = 'http://localhost:4322';
@@ -25,6 +28,29 @@ function showError(message) {
 function hideError() {
 	const errorMessage = document.getElementById('errorMessage');
 	errorMessage.classList.add('hidden');
+}
+
+//Fetch all actors function
+async function fetchAllActors() {
+    try {
+        loadingState.classList.remove('hidden');
+        actorTable.classList.add('hidden');
+        
+        const response = await fetch('/homePage/dashboard/actorManagement/all-actors');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const actors = await response.json();
+        displayActorCards(actors);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Failed to fetch actors. Please try again.');
+    } finally {
+        loadingState.classList.add('hidden');
+    }
 }
 
 // Search Actors Function
@@ -253,7 +279,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (searchType) {
 		searchType.addEventListener('change', updatePlaceholder);
 	}
-
+	
+	if (viewAllActorsBtn) {
+	        viewAllActorsBtn.addEventListener('click', fetchAllActors);
+	    }
+		
 	// Set initial placeholder
 	updatePlaceholder();
 

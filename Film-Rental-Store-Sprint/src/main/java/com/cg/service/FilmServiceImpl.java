@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.dto.ActorDTO;
+import com.cg.dto.ActorDataDTO;
 import com.cg.dto.FilmActorDTO;
 import com.cg.dto.FilmCategoryDTO;
 import com.cg.dto.FilmDTO;
@@ -53,7 +54,16 @@ public class FilmServiceImpl implements FilmService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
+	
+	//Get all Films
+	@Override
+    public List<FilmDataDTO> getAllFilms() {
+        // Fetch all actors from the repository and convert them to DTOs in one step
+        return filmRepository.findAll().stream()
+                .map(film -> new FilmDataDTO(film.getFilmId(), film.getTitle(), film.getDescription(), film.getReleaseYear(), film.getRentalRate(), film.getRating(), film.getRentalDuration(), film.getLength()))
+                .collect(Collectors.toList());
+    }
+	
 	// Add new Film object in DB
 	@Override
 	public Film addFilm(Film film) {
@@ -686,5 +696,7 @@ public class FilmServiceImpl implements FilmService {
 //            category.getName()
 //        );
 //    }
+
+
 
 }

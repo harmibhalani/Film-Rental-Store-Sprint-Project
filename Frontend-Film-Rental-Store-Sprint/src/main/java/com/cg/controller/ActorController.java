@@ -86,4 +86,20 @@ public class ActorController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating actor: " + e.getMessage());
 		}
 	}
+    
+    //Get all actors
+    @GetMapping("/all-actors")
+    public ResponseEntity<?> getAllActors() {
+        try {
+            List<Actor> actors = actorService.getAllActors();
+            if (actors.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No actors found.");
+            }
+            return ResponseEntity.ok(actors);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error fetching actors: " + e.getMessage());
+        }
+    }
 }

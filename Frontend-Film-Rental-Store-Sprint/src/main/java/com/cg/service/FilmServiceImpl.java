@@ -2,7 +2,8 @@ package com.cg.service;
  
 import java.util.Arrays;
 import java.util.List;
- 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,30 +21,34 @@ public class FilmServiceImpl implements FilmService{
 	 @Autowired
 	    private RestTemplate restTemplate;
  
-//	    private static final String FILM_API_URL = "http://localhost:4311/api/films/title/{title}";
 	    private static final String FILM_API_BASE_URL = "http://localhost:4311/api/films";
+	    
+	    //Get all films
+	    @Override
+	    public List<Film> getAllFilms() {
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	        HttpEntity<String> entity = new HttpEntity<>(headers);
  
-//	    @Override
-//	    public List<Film> getFilmsByTitle(String title) {
-//	        HttpHeaders headers = new HttpHeaders();
-//	        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON)); 
-//
-//	        // Create HttpEntity with headers
-//	        HttpEntity<String> entity = new HttpEntity<>(headers);
-//	        
-//	        
-//	        // Make a GET request using exchange method
-//	        ResponseEntity<Film[]> response = restTemplate.exchange(
-//	        		FILM_API_BASE_URL + "/title/{title}", // URL of the API
-//	                HttpMethod.GET, // GET method
-//	                entity, // Request entity with headers
-//	                Film[].class, // Response type as Film[]
-//	                title // Path variable for the title
-//	        );
-//
-//	        // Convert the array of films into a list and return it
-//	        return Arrays.asList(response.getBody());
-//	    }
+	        try {
+	            ResponseEntity<Film[]> response = restTemplate.exchange(
+	                FILM_API_BASE_URL + "/allfilms",
+	                HttpMethod.GET,
+	                entity,
+	                Film[].class
+	            );
+ 
+	            if (response.getBody() == null) {
+	                throw new RuntimeException("No films found");
+	            }
+ 
+	            return Arrays.stream(response.getBody())
+	                .collect(Collectors.toList());
+ 
+	        } catch (RestClientException e) {
+	            throw new RuntimeException("Failed to fetch all films: " + e.getMessage(), e);
+	        }
+	    }
 	    
 	  //Get method to search film by title
 	    @Override

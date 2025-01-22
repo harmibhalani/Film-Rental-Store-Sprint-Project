@@ -42,10 +42,15 @@ public class HomePageController {
         return "homePage"; 
     }
     
-//    @GetMapping("/storeManagement")
-//    public String storeManagement() {
-//        return "storeManagement"; 
-//    }
+    @GetMapping("/actorCards")
+    public String getActorCardsPage() {
+        return "actorCards";
+    }
+    
+    @GetMapping("/filmCards")
+    public String getFilmCardsPage() {
+    	return "filmCards";
+    }
     
     @GetMapping("/shop")
     public String shop() {

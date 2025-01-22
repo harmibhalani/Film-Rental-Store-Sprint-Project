@@ -23,16 +23,21 @@ public class FilmController {
 	@Autowired
 	private FilmService filmService;
 	
-//	 @GetMapping("/search-film")
-//	    @ResponseBody
-//	    public ResponseEntity<List<Film>> searchFilm(@RequestParam("title") String title) {
-//	        try {
-//	            List<Film> films = filmService.getFilmsByTitle(title);
-//	            return ResponseEntity.ok(films);
-//	        } catch (Exception e) {
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//	        }
-//	    }
+	//Get all films
+	@GetMapping("/all-films")
+    public ResponseEntity<?> getAllFilms() {
+        try {
+            List<Film> films = filmService.getAllFilms();
+            if (films.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No films found.");
+            }
+            return ResponseEntity.ok(films);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error fetching films: " + e.getMessage());
+        }
+    }
 	
 	//Get method to search film by title and year
 	@GetMapping("/search-film")

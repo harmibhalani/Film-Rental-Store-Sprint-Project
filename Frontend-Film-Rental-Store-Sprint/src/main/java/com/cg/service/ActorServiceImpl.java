@@ -2,7 +2,8 @@ package com.cg.service;
  
 import java.util.Arrays;
 import java.util.List;
- 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -139,6 +140,33 @@ public class ActorServiceImpl implements ActorService {
  
         } catch (RestClientException e) {
             throw new RuntimeException("Error creating actor: " + e.getMessage(), e);
+        }
+    }
+    
+    //Get all actors
+    @Override
+    public List<Actor> getAllActors() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+ 
+        try {
+            ResponseEntity<Actor[]> response = restTemplate.exchange(
+                ACTOR_API_BASE_URL + "/allactors",
+                HttpMethod.GET,
+                entity,
+                Actor[].class
+            );
+ 
+            if (response.getBody() == null) {
+                throw new RuntimeException("No actors found");
+            }
+ 
+            return Arrays.stream(response.getBody())
+                .collect(Collectors.toList());
+ 
+        } catch (RestClientException e) {
+            throw new RuntimeException("Failed to fetch all actors: " + e.getMessage(), e);
         }
     }
 }

@@ -114,4 +114,15 @@ public class ActorController {
  
 		return ResponseEntity.ok(assignedFilm);
 	}
+	
+	//Get all actors
+	@GetMapping("/actors/allactors")
+	public ResponseEntity<?> getAllActors() {
+	    List<ActorDataDTO> actors = actorService.getAllActors();
+	    if (actors.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No actors found.");
+	    }
+	    return ResponseEntity.ok(actors);
+	}
 }
