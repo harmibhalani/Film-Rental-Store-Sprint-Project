@@ -76,7 +76,7 @@ function displayStore(store) {
 			
             <td>
                 <button
-                    onclick="openEditModal('${store.storeId}', '${escapeHtml(store.city)}')"
+                    onclick="openEditModal('${store.storeId}', '${escapeHtml(store.phone)}')"
                     class="edit-btn bg-blue-500 text-white px-3 py-1 rounded">
                     Edit
                 </button>
