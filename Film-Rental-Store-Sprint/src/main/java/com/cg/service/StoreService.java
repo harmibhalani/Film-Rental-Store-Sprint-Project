@@ -23,7 +23,7 @@ public interface StoreService {
 	   //Search Store by phone number 
 	    StoreDTO findStoreByPhone(String phone);
 	    //Update phone number of a Store
-	    void updateStorePhone(Short storeId, String phone);
+	    StoreDTO updateStorePhone(Short storeId, String phone);
 	    //Assign manager to a Store
 	    StoreDTO assignManagerToStore(Short storeId, Short managerStaffId);
 	    //Display all Staff of a Store
@@ -34,5 +34,7 @@ public interface StoreService {
 	    StaffDTO findManagerByStoreId(Short storeId);
 	    //Display Manager details
 	    List<ManagerStoreDTO> getAllManagersDetails();
+	 // Display all list of Stores
+	    List<StoreDTO> findAllStores();
  
 }

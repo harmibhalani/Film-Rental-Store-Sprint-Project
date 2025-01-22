@@ -1,7 +1,8 @@
 package com.cg.controller;
  
 import java.util.List;
- 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,10 +49,16 @@ public class StoreController {
     }
  
     // Update phone number of a Store
-    @PutMapping("/store/update/{storeId}/{phone}")
-    public ResponseEntity<String> updatePhone(@PathVariable Short storeId, @PathVariable String phone) {
-        storeService.updateStorePhone(storeId, phone);
-        return ResponseEntity.ok("Phone updated successfully");
+    @PutMapping("/store/update/{storeId}")
+    public ResponseEntity<StoreDTO> updatePhone(@PathVariable Short storeId, @RequestBody Map<String, String> requestBody) {
+        String phone = requestBody.get("phone");
+        
+        if (phone == null || phone.isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Return bad request if phone is missing
+        }
+ 
+        StoreDTO updatedStore = storeService.updateStorePhone(storeId, phone);
+        return ResponseEntity.ok(updatedStore); // Return the updated store details
     }
  
     // Assign manager to a Store
@@ -89,5 +96,11 @@ public class StoreController {
     public ResponseEntity<List<ManagerStoreDTO>> getAllManagers() {
         List<ManagerStoreDTO> managers = storeService.getAllManagersDetails();
         return ResponseEntity.ok(managers);
+    }
+ // Display all list of Stores
+    @GetMapping("/store/all")
+    public ResponseEntity<List<StoreDTO>> getAllStores() {
+        List<StoreDTO> stores = storeService.findAllStores();
+        return ResponseEntity.ok(stores);
     }
 }

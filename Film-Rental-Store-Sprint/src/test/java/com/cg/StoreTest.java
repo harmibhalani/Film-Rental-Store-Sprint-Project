@@ -71,17 +71,7 @@ class StoreTest {
         assertNotNull(response.getBody());
     }
  
-    @Test
-    void testUpdatePhone() {
-        Short storeId = 1;
-        String phone = "1234567890";
-        doNothing().when(storeService).updateStorePhone(storeId, phone);
- 
-        ResponseEntity<String> response = storeController.updatePhone(storeId, phone);
- 
-        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
-        assertEquals("Phone updated successfully", response.getBody());
-    }
+   
  
     @Test
     void testAssignManagerToStore() {

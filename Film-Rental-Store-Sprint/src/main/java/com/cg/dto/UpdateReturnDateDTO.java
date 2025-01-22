@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 public class UpdateReturnDateDTO {
 	  @NotNull(message = "Return date cannot be null.")
 	    @FutureOrPresent(message = "Return date must be in the present or future.")
-    private String returnDate; // Expecting a string representation of LocalDateTime
+    private String returnDate; 
  
     public String getReturnDate() {
         return returnDate;

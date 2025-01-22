@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/inventoryManagement.css}">
+</head>
+<body>
+	
+ 
+	  
+    <div class="container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <h1>Inventory Management Dashboard</h1>
+            <button class="add-inventory-btn">
+                <i class="fas fa-plus"></i>Add New Inventory
+            </button>
+        </header>
+ 
+        <!-- Quick Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-info">
+                        <p class="stat-label">Total Inventory</p>
+                        <p class="stat-value" id="totalInventory">0</p>
+                    </div>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-boxes fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-info">
+                        <p class="stat-label">Available Items</p>
+                        <p class="stat-value" id="availableItems">0</p>
+                    </div>
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-info">
+                        <p class="stat-label">Rented Items</p>
+                        <p class="stat-value" id="rentedItems">0</p>
+                    </div>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-handshake fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-info">
+                        <p class="stat-label">Store Count</p>
+                        <p class="stat-value" id="storeCount">0</p>
+                    </div>
+                    <div class="stat-icon orange">
+                        <i class="fas fa-store fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- Search Section -->
+        <div class="search-section">
+            <form id="searchForm" class="search-form">
+                <input type="text" id="searchInput" placeholder="Search by film title..." class="search-input" required>
+                <select id="storeSelect" class="store-select">
+                    <option value="">All Stores</option>
+                </select>
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>Search
+                </button>
+            </form>
+        </div>
+ 
+        <!-- Loading Indicator -->
+        <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+        </div>
+ 
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message hidden">
+            <div class="error-content">
+                <span id="errorText"></span>
+            </div>
+        </div>
+ 
+        <!-- Inventory List Section -->
+        <div class="inventory-list-section">
+            <header class="inventory-list-header">
+                <h2>Inventory List</h2>
+            </header>
+ 
+            <!-- Results Table -->
+            <div id="inventoryTable" class="table-container hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Inventory ID</th>
+                            <th>Film Title</th>
+                            <th>Store ID</th>
+                            <th>Status</th>
+                            <th>Last Update</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryList">
+                        <!-- Inventory items will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+ 
+	<!-- Add/Edit Inventory Modal -->
+	<div id="inventoryModal" class="modal hidden">
+	        <div class="modal-content">
+	            <h2>Add New Inventory</h2>
+	            <form id="inventoryForm" th:action="@{/homePage/dashboard/inventoryManagement/add}" method="post">
+	                <input type="hidden" id="inventoryId" name="inventoryId">
+	                <div class="form-group">
+	                    <label for="filmId">Film ID:</label>
+	                    <input type="number" id="filmId" name="filmId" required min="1" class="form-input">
+	                </div>
+	                <div class="form-group">
+	                    <label for="storeId">Store ID:</label>
+	                    <input type="number" id="storeId" name="storeId" required min="1" class="form-input">
+	                </div>
+	                <div class="form-actions">
+	                    <button type="submit" class="save-btn">Save</button>
+	                    <button type="button" onclick="closeModal()" class="cancel-btn">Cancel</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+ 
+	
+    <script th:src="@{/js/inventoryManagement.js}"></script>
+</body>
+</html>

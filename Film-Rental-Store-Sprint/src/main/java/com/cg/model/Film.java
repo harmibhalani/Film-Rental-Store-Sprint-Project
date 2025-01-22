@@ -37,12 +37,10 @@ import jakarta.validation.constraints.Size;
 public class Film {
 
     @Id
-//    @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", columnDefinition = "SMALLINT UNSIGNED")
     private Long filmId;
     
-//    @JsonProperty("title")
     @NotBlank(message = "Title is required and cannot be blank")
     @Size(max = 128, message = "Title cannot exceed 128 characters")
     @Column(name = "title", length = 128, nullable = false)
@@ -90,7 +88,7 @@ public class Film {
     private Timestamp lastUpdate;
     
     //Relationships
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "language_id", referencedColumnName = "language_id") 
     private Language language; 
     

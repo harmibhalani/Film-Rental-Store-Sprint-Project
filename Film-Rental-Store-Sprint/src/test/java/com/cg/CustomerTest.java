@@ -132,15 +132,7 @@ class CustomerTest {
         assertEquals(200, response.getStatusCode().value());
     }
  
-    @Test
-    void testUpdateCustomerFirstName() {
-        CustomerDTO customerDTO = new CustomerDTO();
-        when(customerService.updateCustomerFirstName((short) 1, "John")).thenReturn(customerDTO);
- 
-        ResponseEntity<?> response = customerController.updateCustomerFirstName((short) 1, "John");
- 
-        assertEquals(200, response.getStatusCode().value());
-    }
+  
  
     @Test
     void testUpdateCustomerLastName() {

@@ -94,15 +94,39 @@ public class StoreServiceImpl implements StoreService {
 	        }
 	        return convertToDTO(store);
 	    }
-	  //Update phone number of a Store
-	  @Override
-	    public void updateStorePhone(Short storeId, String phone) {
-	        Store store = storeRepository.findById(storeId)
-	                .orElseThrow(() -> new ResourceNotFoundException());
+	//Update phone number of a Store  
+	  public StoreDTO updateStorePhone(Short storeId, String phone) {
+		    Store store = storeRepository.findById(storeId)
+		            .orElseThrow(() -> new ResourceNotFoundException());
  
-	        store.getAddress().setPhone(phone); // Assuming Address is fetched through Store
-	        storeRepository.save(store);
-	    }
+		    // Ensure address is not null before accessing its fields
+		    if (store.getAddress() == null) {
+		        throw new ResourceNotFoundException();
+		    }
+ 
+		    // Update the phone number in the Address object
+		    store.getAddress().setPhone(phone);
+		    
+		    // Save the updated store
+		    storeRepository.save(store);
+ 
+		    // Create and return a StoreDTO with updated information
+		    String countryName = null;
+		    
+		    if (store.getAddress().getCity() != null && store.getAddress().getCity().getCountry() != null) {
+		        countryName = store.getAddress().getCity().getCountry().getCountry(); // Assuming Country has a getCountryName method
+		    }
+ 
+		    return new StoreDTO(
+		            store.getStoreId(),
+		            store.getManager().getFirstName(), // Assuming Staff has a getFirstName method
+		            store.getAddress().getAddress(),
+		            store.getAddress().getCity().getCity(), // Accessing city name directly from City object
+		            countryName,
+		            phone
+		    );
+		}
+
 
 	  //Assign manager to a Store
 	  @Override
@@ -188,6 +212,12 @@ public class StoreServiceImpl implements StoreService {
             customer.getLastName(),
             customer.getEmail()
         );
+    }
+ // Display all list of Stores
+    @Override
+    public List<StoreDTO> findAllStores() {
+        List<Store> stores = storeRepository.findAll();
+        return stores.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
  
 }

@@ -158,17 +158,23 @@ public class CustomerController {
     }
   
 // Update first name of Customer
-    @PutMapping("/customers/update/{id}/{fn}")
-    public ResponseEntity<?> updateCustomerFirstName(@PathVariable("id") Short customerId,
-            @PathVariable("fn") @NotBlank String newFirstName) {
+    @PutMapping("/customers/update/{id}")
+    public ResponseEntity<?> updateCustomerFirstName(
+            @PathVariable("id") Short customerId,
+            @RequestBody Map<String, String> requestBody) {
         try {
+            String newFirstName = requestBody.get("firstName");
+            if (newFirstName == null || newFirstName.isBlank()) {
+                return ResponseEntity.badRequest().body("First name is required");
+            }
+ 
             CustomerDTO updatedCustomer = customerService.updateCustomerFirstName(customerId, newFirstName);
             return ResponseEntity.ok(updatedCustomer);
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+   
     // Update last name of Customer
     @PutMapping("/customers/update/last-name/{id}/{ln}")
     public ResponseEntity<?> updateCustomerLastName(@PathVariable("id") Short customerId,

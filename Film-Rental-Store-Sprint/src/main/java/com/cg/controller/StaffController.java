@@ -77,9 +77,14 @@ public class StaffController {
 	}
 //	Update first name of Staff
 	@PutMapping("/staff/update/fn/{id}")
-	public ResponseEntity<StaffDTO> updateFirstName(@PathVariable Short id, @RequestBody String firstName)  {
-	    StaffDTO updatedstaff=staffService.updateFirstName(id, firstName);
-	    return ResponseEntity.ok(updatedstaff);
+	public ResponseEntity<StaffDTO> updateFirstName(@PathVariable Short id,
+	                                                @RequestBody StaffDTO staffDto) {
+	    String firstName = staffDto.getFirstName();
+	    if (firstName == null || firstName.isBlank()) {
+	        throw new IllegalArgumentException("First name is mandatory");
+	    }
+	    StaffDTO updatedStaff = staffService.updateFirstName(id, firstName);
+	    return ResponseEntity.ok(updatedStaff);
 	}
  
 	//Update last name of Staff

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Search</title>
+</head>
+<body>
+    <h1>Welcome to the Film Search</h1>
+
+    <!-- Film Search Form -->
+    <form action="/search-film" method="get">
+        <label for="title">Film Title: </label>
+        <input type="text" id="title" name="title" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Optional: Display error message if any -->
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Display the list of films if available -->
+    <div th:if="${films}">
+        <h2>Film Search Results</h2>
+        <ul>
+            <li th:each="film : ${films}">
+                <p><strong>Title:</strong> <span th:text="${film.title}"></span></p>
+                <p><strong>Director:</strong> <span th:text="${film.director}"></span></p>
+                <p><strong>Release Year:</strong> <span th:text="${film.releaseYear}"></span></p>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

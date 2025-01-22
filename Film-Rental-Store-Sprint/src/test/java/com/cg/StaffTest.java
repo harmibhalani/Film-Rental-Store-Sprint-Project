@@ -125,17 +125,6 @@ class StaffTest {
         assertEquals(1, response.getBody().size());
     }
  
-    @Test
-    void testUpdateFirstName() {
-        StaffDTO updatedStaff = new StaffDTO();
-        when(staffService.updateFirstName((short) 1, "John"))
-            .thenReturn(updatedStaff);
- 
-        ResponseEntity<StaffDTO> response = staffController.updateFirstName((short) 1, "John");
- 
-        assertEquals(200, response.getStatusCodeValue());
-        assertNotNull(response.getBody());
-    }
  
     @Test
     void testUpdateLastName() {

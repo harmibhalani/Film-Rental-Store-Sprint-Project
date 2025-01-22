@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Search Results</title>
+</head>
+<body>
+    <h1>Film Search Results</h1>
+
+    <!-- Optional: Display error message if any -->
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Display the list of films -->
+    <div th:if="${films}">
+        <ul>
+            <li th:each="film : ${films}">
+                <p><strong>Title:</strong> <span th:text="${film.title}"></span></p>
+               
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

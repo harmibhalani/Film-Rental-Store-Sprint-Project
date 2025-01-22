@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles if needed */
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 flex">
+    <div class="bg-gray-900 text-white w-64 transition-all duration-300" id="sidebar">
+        <div class="p-4 flex justify-between items-center">
+            <h2 class="font-bold">Admin Dashboard</h2>
+            <button id="toggleSidebar" class="p-2 hover:bg-gray-800 rounded">
+                <span id="sidebarIcon">☰</span> <!-- Change icon based on state -->
+            </button>
+        </div>
+ 
+        <nav class="mt-6">
+            <a href="#" class="w-full flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700">
+                <span class="mr-4"><i class="fas fa-chart-bar"></i></span>
+                <span>Overview</span>
+            </a>
+			<a href="/filmManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+			               <span class="mr-4"><i class="fas fa-film"></i></span>
+			               <span>Films</span>
+			           </a>
+		    <a href="/actorManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+		     <span class="mr-4"><i class="fas fa-user"></i></span>
+	          <span>Actors</span>
+			 </a>
+
+			           <a href="/inventoryManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+			               <span class="mr-4"><i class="fas fa-box"></i></span>
+			               <span>Inventory</span>
+			           </a>
+						<a href="/customerManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+			               <span class="mr-4"><i class="fas fa-id-badge"></i></span>
+			               <span>Customer Management</span>
+			           </a>
+            <a href="/storeManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+                <span class="mr-4"><i class="fas fa-store"></i></span>
+                <span>Store Management</span>
+            </a>
+            <a href="/staffManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+                <span class="mr-4"><i class="fas fa-users"></i></span>
+                <span>Staff Management</span>
+            </a>
+           
+            <a href="/rentalManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+                <span class="mr-4"><i class="fas fa-ticket"></i></span>
+                <span>Rentals</span>
+            </a>
+            <a href="/paymentManagement" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+                <span class="mr-4"><i class="fas fa-dollar-sign"></i></span>
+                <span>Payments</span>
+            </a>
+			<form action="/logout" method="GET" class="w-full flex items-center px-4 py-3 hover:bg-gray-800">
+			    <button type="submit" class="w-full flex items-center bg-transparent border-none cursor-pointer">
+			        <span class="mr-4"><i class="fas fa-sign-out-alt"></i></span>
+			        <span>Logout</span>
+        </nav>
+    </div>
+ 
+    <!-- Main Content -->
+    <div class="flex-1 overflow-hidden">
+        <header class="bg-white shadow-sm">
+            <div class="p-4">
+                <h1 id="pageTitle" class="text-2xl font-bold">Dashboard Overview</h1> <!-- Dynamic title -->
+            </div>
+        </header>
+ 
+        <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Stat Cards -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg"><i class="fas fa-film"></i></div>
+                    <span class="text-sm text-green-500"></span> <!-- Trend -->
+                </div>
+                <h3 class="text-gray-600 text-sm">Total Films</h3>
+                <p class="text-2xl font-bold mt-1">1000+</p> <!-- Value -->
+            </div>
+ 
+            <!-- Add more Stat Cards as needed -->
+            <!-- Example Stat Card -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg"><i class="fas fa-ticket"></i></div>
+                    <span class="text-sm text-green-500"></span> <!-- Trend -->
+                </div>
+                <h3 class="text-gray-600 text-sm">Active Rentals</h3>
+                <p class="text-2xl font-bold mt-1">156</p> <!-- Value -->
+            </div>
+ 
+            <!-- Repeat Stat Cards for other metrics -->
+ 
+			<div class="bg-white p-6 rounded-lg shadow-sm">
+			               <div class="flex items-center justify-between mb-4">
+			                   <div class="p-2 bg-blue-100 rounded-lg"><i class="fas fa-dollar-sign"></i></div>
+			                   <span class="text-sm text-green-500"></span> <!-- Trend -->
+			               </div>
+			               <h3 class="text-gray-600 text-sm">Total Revenue</h3>
+			               <p class="text-2xl font-bold mt-1">400000</p> <!-- Value -->
+			           </div>
+ 
+            <!-- Recent Rentals Section -->
+			<div class="bg-white p-6 rounded-lg shadow-sm">
+			               <div class="flex items-center justify-between mb-4">
+			                   <div class="p-2 bg-blue-100 rounded-lg"><i class="fas fa-warehouse" ></i></div>
+			                   <span class="text-sm text-green-500"></span> <!-- Trend -->
+			               </div>
+			               <h3 class="text-gray-600 text-sm">Total Inventory</h3>
+			               <p class="text-2xl font-bold mt-1">100+</p> <!-- Value -->
+			           </div>
+ 
+           
+ 
+            <!-- Popular Films Section -->
+			<div class="col-span-full lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
+			    <h2 class="text-2xl font-bold mb-4">Popular Films</h2>
+			    
+			    <div class="space-y-3">
+			        <!-- Pulp Fiction -->
+			        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+			            <h3 class="text-lg font-medium text-gray-900">
+			                Pulp Fiction
+			            </h3>
+			            <p class="text-sm text-gray-500">
+			                45 rentals
+			            </p>
+			        </div>
+ 
+			        <!-- The Godfather -->
+			        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+			            <h3 class="text-lg font-medium text-gray-900">
+			                The Godfather
+			            </h3>
+			            <p class="text-sm text-gray-500">
+			                38 rentals
+			            </p>
+			        </div>
+ 
+			        <!-- Fight Club -->
+			        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+			            <h3 class="text-lg font-medium text-gray-900">
+			                Fight Club
+			            </h3>
+			            <p class="text-sm text-gray-500">
+			                32 rentals
+			            </p>
+			        </div>
+			    </div>
+			</div>
+			
+			<div class="col-span-full lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
+						    <h2 class="text-2xl font-bold mb-4">Popular Category</h2>
+						    
+						    <div class="space-y-3">
+						        <!-- Pulp Fiction -->
+						        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+						            <h3 class="text-lg font-medium text-gray-900">
+						                Fantasy
+						            </h3>
+						            
+						        </div>
+ 
+						        <!-- The Godfather -->
+						        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+						            <h3 class="text-lg font-medium text-gray-900">
+						                Horror
+						            </h3>
+						            <p class="text-sm text-gray-500">
+						                
+						            </p>
+						        </div>
+ 
+						        <!-- Fight Club -->
+						        <div class="flex flex-col p-4 bg-gray-50 rounded-lg">
+						            <h3 class="text-lg font-medium text-gray-900">
+						                Comedies
+						            </h3>
+						            <p class="text-sm text-gray-500">
+						                
+						            </p>
+						        </div>
+						    </div>
+						</div>
+						
+         </main >
+     
+ 
+     <!-- JavaScript for sidebar toggle functionality -->
+     <!-- Include jQuery for simplicity in this example -->
+     <!-- You can also use vanilla JavaScript if you prefer not to include jQuery -->
+     <!-- Include Font Awesome for icons -->
+     <!-- Optional: Use a local or CDN version of jQuery and Font Awesome -->
+ 
+     <!-- Sidebar Toggle Script -->
+     <script src="//code.jquery.com/jquery.min.js"></script>
+ 
+     <!-- Sidebar Toggle Functionality -->
+     <script type='text/javascript'>
+         $(document).ready(function() {
+             $('#toggleSidebar').click(function() {
+                 $('#sidebar').toggleClass('w-full w20');
+                 $('#sidebarIcon').text($('#sidebarIcon').text() === '☰' ? '✖' : '☰');
+             });
+         });
+     </script>
+ 
+</body >
+</html >

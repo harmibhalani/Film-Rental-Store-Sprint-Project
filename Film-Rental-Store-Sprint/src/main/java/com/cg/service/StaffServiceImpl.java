@@ -31,7 +31,6 @@ public class StaffServiceImpl implements StaffService {
     private StaffRepository staffRepository;
     @Autowired
     private StoreRepository storeRepository;
-//    
     @Autowired
     private AddressRepository addressRepository;
 
@@ -117,19 +116,25 @@ public class StaffServiceImpl implements StaffService {
     }
     //Update first name of Staff
     @Override
-    public StaffDTO updateFirstName(Short staffId, String firstName)  {
+    public StaffDTO updateFirstName(Short staffId, String firstName) {
+        // Find the staff member by ID
         Staff staff = staffRepository.findById(staffId)
-                .orElseThrow(() -> new ResourceNotFoundException());
+            .orElseThrow(() -> new IllegalArgumentException("Staff not found with id: " + staffId));
+        
+        // Update the first name
         staff.setFirstName(firstName);
+        
+        // Save the updated staff member back to the repository
         staff = staffRepository.save(staff);
- 
+        
+        // Return the updated StaffDTO
         return new StaffDTO(
-                staff.getStaffId(),
-                staff.getFirstName(),
-                staff.getLastName(),
-                staff.getEmail(),
-                staff.getUsername(),
-                staff.getActive()
+            staff.getStaffId(),
+            staff.getFirstName(),
+            staff.getLastName(),
+            staff.getEmail(),
+            staff.getUsername(),
+            staff.getActive()
         );
     }
  

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Store Management Dashboard</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/storeManagement.css}">
+</head>
+ 
+<body>
+	<div class="container">
+		<!-- Header Section -->
+		<header class="dashboard-header">
+			<h1>Store Management Dashboard</h1>
+			<button class="add-store-btn">
+				<i class="fas fa-plus"></i>Add New Manager Name
+			</button>
+		</header>
+ 
+		<!-- Quick Stats Cards -->
+		<div class="stats-container">
+			<div class="stat-card">
+				<div class="stat-content">
+					<div class="stat-info">
+						<p class="stat-label">Total Films</p>
+						<p class="stat-value">24</p>
+					</div>
+					<div class="stat-icon blue">
+						<i class="fas fa-store fa-2x"></i>
+					</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-content">
+					<div class="stat-info">
+						<p class="stat-label">Total Inventories</p>
+						<p class="stat-value">156</p>
+					</div>
+					<div class="stat-icon green">
+						<i class="fas fa-boxes fa-2x"></i>
+					</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-content">
+					<div class="stat-info">
+						<p class="stat-label">Total Stores</p>
+						<p class="stat-value">5,234</p>
+					</div>
+					<div class="stat-icon purple">
+						<i class="fas fa-store fa-2x"></i>
+					</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-content">
+					<div class="stat-info">
+						<p class="stat-label">Active Rentals</p>
+						<p class="stat-value">892</p>
+					</div>
+					<div class="stat-icon orange">
+						<i class="fas fa-handshake fa-2x"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<!-- Search Section -->
+		<div class="search-section">
+			<form id="searchForm" class="search-form">
+				<input type="text" id="searchInput" placeholder="Search store by city name..." class="search-input"
+					required>
+				<button type="submit" class="search-button">
+					<i class="fas fa-search"></i>Search
+				</button>
+			</form>
+		</div>
+ 
+		<!-- Loading Indicator -->
+		<div id="loadingState" class="loading-state hidden">
+			<div class="spinner"></div>
+		</div>
+ 
+		<!-- Error Message -->
+		<div id="errorMessage" class="error-message hidden">
+			<div class="error-content">
+				<span id="errorText"></span>
+			</div>
+		</div>
+ 
+		<!-- Film List Section -->
+		<div class="store-list-section">
+			<header class="store-list-header">
+				<h2>Store List</h2>
+			</header>
+ 
+			<!-- Results Table -->
+			<div id="storeTable" class="table-container hidden">
+				<table>
+					<thead>
+						<tr>
+							<th>Store ID</th>
+							<th>Manager Name</th>
+							<th>Address</th>
+							<th>City</th>
+							<th>Country</th>
+							<th>Phone</th>
+							<th>Action</th>
+							<!--<th>
+								<a th:href="@{/editPage}"
+									class="btn btn-warning btn-sm">Edit</a>
+							</th>-->
+						</tr>
+					</thead>
+					<tbody id="storeList">
+						<!-- Store will be populated here -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+ 
+	<!-- Add this right before the closing body tag -->
+<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+	<div class="bg-white p-6 rounded-lg shadow-lg w-96">
+		<h2 class="text-xl font-bold mb-4">Edit Phone No.</h2>
+		<form id="updateForm" class="space-y-4">
+			<input type="hidden" id="editStoreId">
+			<div>
+				<label for="editPhone" class="block text-sm font-medium text-gray-700">Phone number</label>
+				<input type="text" id="editPhone"
+					class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+			</div>
+			<div class="flex justify-end gap-2">
+				<button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+					Update
+				</button>
+				<button type="button" onclick="closeModal()"
+					class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+					Cancel
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+ 
+	<script th:src="@{/js/storeManagement.js}"></script>
+</body>
+ 
+</html>

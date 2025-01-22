@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmFlex Rentals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation Bar -->
+    <nav class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-film h-8 w-8"></i>
+                    <span class="text-xl font-bold">FilmFlex Rentals</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="px-3 py-2 rounded hover:bg-indigo-700">Login</button>
+                    <button class="px-3 py-2 bg-white text-indigo-600 rounded hover:bg-gray-100">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-white">
+        <div class="max-w-7xl mx-auto py-16 px-4">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Your Gateway to Cinema</h1>
+                <p class="text-xl text-gray-600 mb-8">Discover thousands of films available for rent</p>
+                <div class="flex justify-center">
+                    <input type="search" placeholder="Search for films..." 
+                        class="w-96 px-4 py-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    <button class="px-6 py-2 bg-indigo-600 text-white rounded-r hover:bg-indigo-700">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="max-w-7xl mx-auto py-12 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 bg-white rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-film h-6 w-6 text-indigo-600"></i>
+                    <h2 class="ml-3 text-xl font-semibold">Browse Films</h2>
+                </div>
+                <p class="text-gray-600">Explore our vast collection of films across various genres and languages.</p>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-store h-6 w-6 text-indigo-600"></i>
+                    <h2 class="ml-3 text-xl font-semibold">Find Stores</h2>
+                </div>
+                <p class="text-gray-600">Locate our stores near you and check film availability.</p>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-clock h-6 w-6 text-indigo-600"></i>
+                    <h2 class="ml-3 text-xl font-semibold">Quick Rental</h2>
+                </div>
+                <p class="text-gray-600">Simple and fast rental process with online payments.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
