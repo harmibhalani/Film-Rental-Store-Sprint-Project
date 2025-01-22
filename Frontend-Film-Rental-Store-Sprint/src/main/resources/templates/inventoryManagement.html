@@ -120,29 +120,39 @@
         </div>
     </div>
  
-	<!-- Add/Edit Inventory Modal -->
+	<!-- Update the modal div in your HTML file -->
 	<div id="inventoryModal" class="modal hidden">
-	        <div class="modal-content">
+	    <div class="modal-content">
+	        <div class="modal-header">
 	            <h2>Add New Inventory</h2>
-	            <form id="inventoryForm" th:action="@{/homePage/dashboard/inventoryManagement/add}" method="post">
-	                <input type="hidden" id="inventoryId" name="inventoryId">
-	                <div class="form-group">
-	                    <label for="filmId">Film ID:</label>
-	                    <input type="number" id="filmId" name="filmId" required min="1" class="form-input">
-	                </div>
-	                <div class="form-group">
-	                    <label for="storeId">Store ID:</label>
-	                    <input type="number" id="storeId" name="storeId" required min="1" class="form-input">
-	                </div>
-	                <div class="form-actions">
-	                    <button type="submit" class="save-btn">Save</button>
-	                    <button type="button" onclick="closeModal()" class="cancel-btn">Cancel</button>
-	                </div>
-	            </form>
+	            <button type="button" class="close-modal" onclick="closeModal()">&times;</button>
 	        </div>
+	        <form id="inventoryForm">
+	            <div class="form-group">
+	                <label for="filmTitle">Film Title:</label>
+	                <input type="text" id="filmTitle" name="filmTitle" required class="form-input">
+	            </div>
+	            <div class="form-group">
+	                <label for="filmId">Film ID:</label>
+	                <input type="number" id="filmId" name="filmId" required min="1" class="form-input">
+	            </div>
+	            <div class="form-group">
+	                <label for="storeId">Store ID:</label>
+	                <input type="number" id="storeId" name="storeId" required min="1" class="form-input">
+	            </div>
+				<div class="form-group">
+				                <label for="inventoryId">Inventory ID:</label>
+				                <input type="number" id="inventoryId" name="inventoryId" required min="1" class="form-input">
+				            </div>
+				
+	            <div class="form-actions">
+	                <button type="submit" onclick="closeModal()" class="save-btn">Save</button>
+	                <button type="button" onclick="closeModal()" class="cancel-btn">Cancel</button>
+	            </div>
+				
+	        </form>
 	    </div>
- 
-	
+	</div>
     <script th:src="@{/js/inventoryManagement.js}"></script>
 </body>
 </html>

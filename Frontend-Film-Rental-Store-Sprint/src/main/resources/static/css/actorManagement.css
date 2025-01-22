@@ -272,24 +272,80 @@ button {
  
 /* Search Section */
 .search-section {
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 3rem;
+  background-color: white;
+  padding: 2rem 0;
+  margin-bottom: 1rem;
+  border-radius: 11px;
 }
  
-/* Search Section Styles */
-.card-body {
-    padding: 1.5rem;
-    width: 100%;
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
 }
-.search-section {
-    margin: 2rem auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+ 
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  margin: 10px;
+}
+ 
+.search-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #1a202c;
+  background-color: #fff;
+  width: 98%;
+}
+ 
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+ 
+.search-type {
+  padding: 0.75rem 2rem 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  background-color: #fff;
+  font-size: 0.875rem;
+  color: #1a202c;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+ 
+.search-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  text-decoration-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+ 
+.search-btn:hover {
+  background-color: #2563eb;
+}
+ 
+.search-btn i {
+  font-size: 0.875rem;
 }
  
 /* Form Container */
@@ -298,83 +354,6 @@ button {
     max-width: 1200px;
 }
  
-/* Search Container */
-/* Search Section Styles */
-.search-section {
-    margin: 2rem auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
- 
-/* Form Container */
-.search-form {
-    width: 100%;
-    max-width: 600px;
-}
- 
-/* Search Container */
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: #f8f9fa;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width:100%;
-}
- 
-/* Search Input */
-.search-input {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    outline: none;
-    color: #333;
-}
- 
-/* Dropdown (Search Type) */
-.search-type {
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: #e5e7eb;
-    color: #333;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    height: 2.875rem; /* Match height with the button */
-}
- 
-/* Search Button */
-.search-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    background-color: #3b82f6;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    outline: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 2.875rem; /* Match height with dropdown */
-}
- 
-.search-button i {
-    font-size: 1.2rem;
-}
  
 /* Hover Effects */
 .search-button:hover {
@@ -657,3 +636,64 @@ tr:hover {
         justify-content: center;
     }
 }
+ 
+ 
+/*-----------------*/
+ 
+#createActorModal .relative {
+    width: 700px; /* Increase modal width */
+    max-width: 90%; /* Responsive max width */
+    padding: 40px; /* Increase padding inside the modal */
+    border-radius: 10px; /* Smooth border edges */
+}
+ 
+#createActorModal h3 {
+    font-size: 24px; /* Larger title font */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px; /* Add space below heading */
+}
+ 
+#createActorForm div.mb-4 {
+    margin-bottom: 30px; /* Increase spacing between fields */
+}
+ 
+#createActorForm label {
+    display: block;
+    font-size: 18px; /* Larger label font */
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-bottom: 10px; /* Space between label and input */
+}
+ 
+#createActorForm input {
+    width: 100%;
+    padding: 15px 20px; /* Larger input fields */
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+ 
+#createActorForm input:focus {
+    border-color: #3b82f6; /* Blue border on focus */
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+ 
+#createActorForm .flex.justify-end {
+    margin-top: 40px; /* Increase spacing before buttons */
+    gap: 20px; /* Add spacing between buttons */
+}
+ 
+#createActorForm button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+ 
+#createActorForm button:hover {
+    opacity: 0.9;
+}
+ 

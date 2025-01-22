@@ -109,55 +109,88 @@
                         </tr>
                     </thead>
                     <tbody id="rentalList">
-                        <!-- Rentals will be populated here -->
+						
+						                            <tr id="rental-row-<%= rental.rentalId %>">
+						                                <td><%= rental.rentalId %></td>
+						                                <td><%= rental.customerId %></td>
+						                                <td><%= formatDate(rental.rentalDate) %></td> <!-- Format date dynamically -->
+						                                <td><%= rental.returnDate ? formatDate(rental.returnDate) : 'Not returned' %></td>
+						                                <td><%= getRentalStatus(rental) %></td> <!-- Dynamic rental status -->
+						                            </tr>
+						                       
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
  
-    <!-- Add New Rental Modal -->
-    <div id="addRentalModal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Add New Rental</h2>
-            <form id="addRentalForm">
-                <div class="form-group">
-                    <label for="customerId">Customer ID</label>
-                    <input type="number" id="customerId" required>
-                </div>
-                <div class="form-group">
-                    <label for="inventoryId">Inventory ID</label>
-                    <input type="number" id="inventoryId" required>
-                </div>
-                <div class="form-group">
-                    <label for="staffId">Staff ID</label>
-                    <input type="number" id="staffId" required>
-                </div>
-                <div class="button-group">
-                    <button type="submit" class="submit-btn">Add Rental</button>
-                    <button type="button" onclick="closeAddModal()" class="cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
- 
+	<div id="rentalModal" class="modal hidden">
+	      <div class="modal-content">
+	          <div class="modal-header">
+	              <h2>Add New Rental</h2>
+	              <button type="button" class="close-modal" onclick="closeModal()">&times;</button>
+	          </div>
+	          <form id="rentalForm">
+	              <div class="form-group">
+	                  <label for="rentalId">Rental ID*:</label>
+	                  <input type="number"
+	                         id="rentalId"
+	                         name="rentalId"
+	                         required
+	                         class="form-input"
+	                         min="1">
+	              </div>
+	              <div class="form-group">
+	                  <label for="rentalDate">Rental Date*:</label>
+	                  <input type="datetime-local"
+	                         id="rentalDate"
+	                         name="rentalDate"
+	                         required
+	                         class="form-input">
+	              </div>
+	              <div class="form-group">
+	                  <label for="returnDate">Return Date:</label>
+	                  <input type="datetime-local"
+	                         id="returnDate"
+	                         name="returnDate"
+	                         class="form-input">
+	              </div>
+	              <div class="form-group">
+	                  <label for="inventoryId">Inventory ID*:</label>
+	                  <input type="number"
+	                         id="inventoryId"
+	                         name="inventoryId"
+	                         required
+	                         class="form-input"
+	                         min="1">
+	              </div>
+	              <div class="form-group">
+	                  <label for="staffId">Staff ID*:</label>
+	                  <input type="number"
+	                         id="staffId"
+	                         name="staffId"
+	                         required
+	                         class="form-input"
+	                         min="1">
+	              </div>
+	              <div class="form-group">
+	                  <label for="customerId">Customer ID*:</label>
+	                  <input type="number"
+	                         id="customerId"
+	                         name="customerId"
+	                         required
+	                         class="form-input"
+	                         min="1">
+	              </div>
+	              <div class="form-actions">
+	                  <button type="submit" class="save-btn">Add Rental</button>
+	                  <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+	              </div>
+	          </form>
+	      </div>
+	  </div>
     <!-- Return Date Modal -->
-    <div id="returnDateModal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Update Return Date</h2>
-            <form id="returnDateForm">
-                <input type="hidden" id="returnRentalId">
-                <div class="form-group">
-                    <label for="returnDate">Return Date</label>
-                    <input type="datetime-local" id="returnDate" required>
-                </div>
-                <div class="button-group">
-                    <button type="submit" class="submit-btn">Update</button>
-                    <button type="button" onclick="closeReturnModal()" class="cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    
  
     <script th:src="@{/js/rentalManagement.js}"></script>
 </body>

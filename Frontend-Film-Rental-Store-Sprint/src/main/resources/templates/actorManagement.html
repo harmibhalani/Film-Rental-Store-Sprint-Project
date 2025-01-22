@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+ 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Actor Management Dashboard</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="stylesheet" th:href="@{/css/actorManagement.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actor Management Dashboard</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/actorManagement.css}">
 </head>
-
+ 
 <body>
 	<div class="container">
 		<!-- Header Section -->
@@ -18,14 +19,14 @@
 				<i class="fas fa-plus"></i>Add New Actor
 			</button>
 		</header>
-
+ 
 		<!-- Quick Stats Cards -->
 		<div class="stats-container">
 			<div class="stat-card">
 				<div class="stat-content">
 					<div class="stat-info">
 						<p class="stat-label">Total Films</p>
-						<p class="stat-value">24</p>
+						<p class="stat-value">1267</p>
 					</div>
 					<div class="stat-icon blue">
 						<i class="fas fa-film fa-2x"></i>
@@ -36,7 +37,7 @@
 				<div class="stat-content">
 					<div class="stat-info">
 						<p class="stat-label">Total Inventories</p>
-						<p class="stat-value">156</p>
+						<p class="stat-value">675</p>
 					</div>
 					<div class="stat-icon green">
 						<i class="fas fa-boxes fa-2x"></i>
@@ -47,7 +48,7 @@
 				<div class="stat-content">
 					<div class="stat-info">
 						<p class="stat-label">Total Stores</p>
-						<p class="stat-value">5,234</p>
+						<p class="stat-value">13</p>
 					</div>
 					<div class="stat-icon purple">
 						<i class="fas fa-store fa-2x"></i>
@@ -66,55 +67,54 @@
 				</div>
 			</div>
 		</div>
-
+ 
 		<!-- Search Section -->
 		<div class="card">
 			<div class="card-header">
-				<h2>Search</h2>
-
+				
+ 
 				<div class="card-body">
 					<div class="search-section">
 						<form id="searchForm" class="search-form">
 							<div class="search-container">
-
+ 
 								<input type="text" id="searchInput" class="search-input"
-									placeholder="Enter your search..." required>
-								<select id="searchType" class="search-type">
+									placeholder="Enter your search..." required> <select
+									id="searchType" class="search-type">
 									<option value="firstname">First Name</option>
 									<option value="lastname">Last Name</option>
-
+ 
 								</select>
-								<button type="submit" id="searchButton" class="search-button">
+								<button type="submit" id="searchButton" class="search-btn">
 									<i class="fas fa-search"></i> Search
 								</button>
 							</div>
 						</form>
 					</div>
 				</div>
-
 			</div>
 		</div>
-
-
-
+ 
+ 
+ 
 		<!-- Loading Indicator -->
 		<div id="loadingState" class="loading-state hidden">
 			<div class="spinner"></div>
 		</div>
-
+ 
 		<!-- Error Message -->
 		<div id="errorMessage" class="error-message hidden">
 			<div class="error-content">
 				<span id="errorText"></span>
 			</div>
 		</div>
-
+ 
 		<!-- Film List Section -->
 		<div class="actor-list-section">
 			<header class="actor-list-header">
 				<h2>Actor List</h2>
 			</header>
-
+ 
 			<!-- Results Table -->
 			<div id="actorTable" class="table-container hidden">
 				<table>
@@ -137,28 +137,31 @@
 			</div>
 		</div>
 	</div>
-
+ 
 	<!-- Add this right before the closing body tag -->
-	<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+	<div id="editModal"
+		class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 		<div class="bg-white p-6 rounded-lg shadow-lg w-96">
 			<h2 class="text-xl font-bold mb-4">Edit Actor</h2>
 			<form id="updateForm" class="space-y-4">
 				<input type="hidden" id="editActorId">
-
+ 
 				<!-- First Name Input -->
 				<div class="mb-4" id="editFirstNameContainer">
-					<label for="editFirstName" class="block text-sm font-medium text-gray-700">First Name</label>
+					<label for="editFirstName"
+						class="block text-sm font-medium text-gray-700">First Name</label>
 					<input type="text" id="editFirstName"
 						class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
 				</div>
-
+ 
 				<!-- Last Name Input -->
 				<div class="mb-4" id="editLastNameContainer">
-					<label for="editLastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+					<label for="editLastName"
+						class="block text-sm font-medium text-gray-700">Last Name</label>
 					<input type="text" id="editLastName"
 						class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
 				</div>
-
+ 
 				<div class="flex justify-end gap-2">
 					<button type="submit"
 						class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Update</button>
@@ -168,45 +171,66 @@
 			</form>
 		</div>
 	</div>
-
-	<div id="createActorModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto hidden">
-		<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+ 
+ 
+	<div id="createActorModal"
+		class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto hidden flex items-center justify-center">
+		<div
+			class="relative mx-auto p-10 border w-[600px] shadow-lg rounded-md bg-white max-w-2xl">
 			<div class="mt-3">
-				<h3 class="text-lg leading-6 font-medium text-gray-900">Create New Actor</h3>
-			<!--	<button class="close-button absolute top-3 right-3 text-gray-600 hover:text-gray-900">
-					<span class="text-2xl">&times;</span>
-				</button>-->
-				<div class="mt-2">
+				<h3 class="text-2xl leading-6 font-medium text-gray-900 text-center">Create
+					New Actor</h3>
+				<div class="mt-6">
 					<form id="createActorForm">
-						<div class="mb-4">
-							<label for="createFirstName" class="block text-sm font-medium text-gray-700">First
-								Name</label>
-							<input type="text" id="createFirstName" class="mt-1 block w-full rounded-md border-gray-300"
+						<div class="mb-6">
+							<label for="createFirstName"
+								class="block text-sm font-medium text-gray-700">First
+								Name</label> <input type="text" id="createFirstName"
+								class="mt-2 block w-full rounded-md border border-gray-400 px-5 py-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
 								required>
 						</div>
-						<div class="mb-4">
-							<label for="createLastName" class="block text-sm font-medium text-gray-700">Last
-								Name</label>
-							<input type="text" id="createLastName" class="mt-1 block w-full rounded-md border-gray-300"
+						<div class="mb-6">
+							<label for="createLastName"
+								class="block text-sm font-medium text-gray-700">Last
+								Name</label> <input type="text" id="createLastName"
+								class="mt-2 block w-full rounded-md border border-gray-400 px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
 								required>
 						</div>
-						<div class="mt-4 flex justify-end">
+						<div class="mt-8 flex justify-end space-x-4">
 							<button type="button" onclick="closeActorModal()"
-								class="mr-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">
-								Cancel
-							</button>
+								class=" px-6 py-3 bg-gray-300 hover:bg-gray-400 rounded-md transition-colors">
+								Cancel</button>
 							<button type="submit"
-								class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">
-								Create Actor
-							</button>
+								class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
+								Create Actor</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
+ 
 	<script th:src="@{/js/actorManagement.js}"></script>
+ 
+	<script>
+		function showActorModal() {
+			const modal = document.getElementById('createActorModal');
+			modal.classList.remove('hidden');
+		}
+ 
+		function closeActorModal() {
+			const modal = document.getElementById('createActorModal');
+			modal.classList.add('hidden');
+		}
+ 
+		// Add click event listener to close modal when clicking outside
+		document.getElementById('createActorModal').addEventListener('click',
+				function(event) {
+					if (event.target === this) {
+						closeActorModal();
+					}
+				});
+	</script>
 </body>
-
+ 
 </html>

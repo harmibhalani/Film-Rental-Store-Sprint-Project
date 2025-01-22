@@ -25,27 +25,54 @@ public class CustomerController {
 	 @Autowired
 	    private CustomerService customerService;
 	// GET request to search actors by first name
-		@GetMapping("/search-customer")
-		@ResponseBody
-		public ResponseEntity<List< Customer>> searchCustomer(@RequestParam("firstName") String firstName) {
-			try {
-				List< Customer> customer = customerService.getCustomerByFirstName(firstName);
-				return ResponseEntity.ok(customer);
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-			}
-		}
-		// PUT request to update an actor's first name by actorId
-		@PutMapping("update/{id}")
-		public ResponseEntity<?> updateCustomerFirstName(
-			@PathVariable("id") Integer customerId, 
-			@RequestBody  Customer customerDTO) {
-			try {
-				 Customer updatedCustomer = customerService.updateCustomerByFirstName(customerId, customerDTO);
-				return ResponseEntity.ok(updatedCustomer);
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("Error updating actor: " + e.getMessage());
-			}
-		}
+	 @GetMapping("/search-customer")
+	    public ResponseEntity<?> searchCustomer(
+	        @RequestParam String searchType,
+	        @RequestParam String searchTerm) {
+	        try {
+	            List<Customer> results;
+	            switch (searchType) {
+	                case "firstname":
+	                    results = customerService.getCustomerByFirstName(searchTerm);
+	                    break;
+	                case "lastname":
+	                    results = customerService.searchByLastName(searchTerm);
+	                    break;
+	                default:
+	                    return ResponseEntity.badRequest().body("Invalid search type");
+	            }
+	            return ResponseEntity.ok(results);
+	        } catch (Exception e) {
+	            return ResponseEntity.badRequest()
+	                .body("Error performing search: " + e.getMessage());
+	        }
+	    }
+	
+	 @PutMapping("/update/fn/{Id}")  // Changed from /fn/{id}
+	 @ResponseBody
+	 public ResponseEntity<?> updateCustomerFirstName(
+	     @PathVariable("Id") Integer customerId,
+@RequestBody Customer customerDTO) {
+	     try {
+	    	 Customer updatedCustomer = customerService.updateCustomerByFirstName(customerId, customerDTO);
+	         return ResponseEntity.ok(updatedCustomer);
+	     } catch (Exception e) {
+	         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	             .body("Error updating firstname: " + e.getMessage());
+	     }
+	 }
+	
+	 @PutMapping("/update/ln/{Id}")  // Changed from /fn/{id}
+	 @ResponseBody
+	 public ResponseEntity<?> updateCustomerLastName(
+	     @PathVariable("Id") Integer customerId,
+@RequestBody Customer customerDTO) {
+	     try {
+	    	 Customer updatedCustomer = customerService.updateCustomerByLastName(customerId, customerDTO);
+	         return ResponseEntity.ok(updatedCustomer);
+	     } catch (Exception e) {
+	         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	             .body("Error updating lastname: " + e.getMessage());
+	     }
+	 }
 }

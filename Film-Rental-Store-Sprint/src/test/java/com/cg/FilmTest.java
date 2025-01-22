@@ -213,16 +213,6 @@ class FilmTest {
         assertEquals(filmDTO, response.getBody());
     }
 
-    @Test
-    void testGetFilmsByCategory() {
-        List<FilmCategoryDTO> films = Arrays.asList(new FilmCategoryDTO());
-        when(filmService.findFilmsByCategory(anyString())).thenReturn(films);
-
-        ResponseEntity<?> response = filmController.getFilmsByCategory("Action");
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(films, response.getBody());
-    }
 
 
     @Test

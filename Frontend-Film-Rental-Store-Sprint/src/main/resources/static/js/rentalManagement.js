@@ -4,8 +4,8 @@ const rentalList = document.getElementById('rentalList');
 const loadingState = document.getElementById('loadingState');
 const errorMessage = document.getElementById('errorMessage');
 const rentalTable = document.getElementById('rentalTable');
-const addRentalForm = document.getElementById('addRentalForm');
-const returnDateForm = document.getElementById('returnDateForm');
+const rentalModal = document.getElementById('rentalModal');
+const rentalForm = document.getElementById('rentalForm');
  
 // Show Error Function
 function showError(message) {
@@ -17,6 +17,17 @@ function showError(message) {
 // Hide Error Function
 function hideError() {
     errorMessage.classList.add('hidden');
+}
+ 
+// Modal Functions
+function openModal() {
+    rentalModal.classList.remove('hidden');
+}
+ 
+function closeModal() {
+    rentalModal.classList.add('hidden');
+    rentalForm.reset();
+    hideError();
 }
  
 // Search Rentals Function
@@ -67,25 +78,30 @@ function displayRentals(rentals) {
         return;
     }
  
-	rentalList.innerHTML = rentals.map(rental => `
-	        <tr id="rental-row-${rental.rentalId}">
-	            <td>${escapeHtml(rental.rentalId)}</td>
-	            <td>${escapeHtml(rental.customerId)}</td>
-	            <td>${formatDate(rental.rentalDate)}</td>
-	            <td>${rental.returnDate ? formatDate(rental.returnDate) : 'Not returned'}</td>
-	            <td>${getRentalStatus(rental)}</td>
-	        </tr>
-	    `).join('');
+    rentalList.innerHTML = rentals.map(rental => `
+        <tr id="rental-row-${rental.rentalId}">
+            <td>${escapeHtml(rental.rentalId)}</td>
+            <td>${escapeHtml(rental.customerId)}</td>
+            <td>${formatDate(rental.rentalDate)}</td>
+            <td>${rental.returnDate ? formatDate(rental.returnDate) : 'Not returned'}</td>
+            <td>${getRentalStatus(rental)}</td>
+        </tr>
+    `).join('');
 }
  
 // Add New Rental Function
 async function addNewRental(event) {
     event.preventDefault();
+    hideError();
  
     const rentalData = {
-        customerId: document.getElementById('customerId').value,
-        inventoryId: document.getElementById('inventoryId').value,
-        staffId: document.getElementById('staffId').value
+		rentalId: document.getElementById('rentalId').value,
+		       rentalDate: document.getElementById('rentalDate').value,
+		       returnDate: document.getElementById('returnDate').value || null, // Handle empty return date
+		       inventoryId: document.getElementById('inventoryId').value,
+		       staffId: document.getElementById('staffId').value,
+		       customerId: document.getElementById('customerId').value
+		
     };
  
     try {
@@ -98,81 +114,22 @@ async function addNewRental(event) {
         });
  
         if (!response.ok) {
-            throw new Error('Failed to add rental');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
  
         const newRental = await response.json();
-        closeAddModal();
         showSuccessMessage('Rental added successfully!');
+        closeModal();
         
-        // Refresh the search if there are results displayed
+        // Refresh the rental list if it's visible
         if (!rentalTable.classList.contains('hidden')) {
             searchForm.dispatchEvent(new Event('submit'));
         }
  
     } catch (error) {
         console.error('Error:', error);
-        showError('Failed to add rental');
+        showError('Failed to add rental. Please try again.');
     }
-}
- 
-// Update Return Date Function
-async function updateReturnDate(event) {
-    event.preventDefault();
- 
-    const rentalId = document.getElementById('returnRentalId').value;
-    const returnDate = document.getElementById('returnDate').value;
- 
-    try {
-        const response = await fetch(`/homePage/dashboard/rentalManagement/update/returndate/${rentalId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(returnDate)
-        });
- 
-        if (!response.ok) {
-            throw new Error('Failed to update return date');
-        }
- 
-        const updatedRental = await response.json();
-        closeReturnModal();
-        showSuccessMessage('Return date updated successfully!');
-        
-        // Update the table row
-        const row = document.getElementById(`rental-row-${rentalId}`);
-        if (row) {
-            const cells = row.getElementsByTagName('td');
-            cells[3].textContent = formatDate(updatedRental.returnDate);
-            cells[4].textContent = getRentalStatus(updatedRental);
-            cells[5].innerHTML = ''; // Remove return button
-        }
- 
-    } catch (error) {
-        console.error('Error:', error);
-        showError('Failed to update return date');
-    }
-}
- 
-// Modal Functions
-function openAddModal() {
-    document.getElementById('addRentalModal').classList.remove('hidden');
-}
- 
-function closeAddModal() {
-    document.getElementById('addRentalModal').classList.add('hidden');
-    addRentalForm.reset();
-}
- 
-function openReturnModal(rentalId) {
-    document.getElementById('returnRentalId').value = rentalId;
-    document.getElementById('returnDateModal').classList.remove('hidden');
-}
- 
-function closeReturnModal() {
-    document.getElementById('returnDateModal').classList.add('hidden');
-    returnDateForm.reset();
 }
  
 // Utility Functions
@@ -217,16 +174,17 @@ function showSuccessMessage(message) {
  
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    // Form submissions
     searchForm?.addEventListener('submit', searchRentals);
-    addRentalForm?.addEventListener('submit', addNewRental);
-    returnDateForm?.addEventListener('submit', updateReturnDate);
+    rentalForm?.addEventListener('submit', addNewRental);
     
-    document.querySelector('.add-rental-btn')?.addEventListener('click', openAddModal);
+    // Modal triggers
+    document.querySelector('.add-rental-btn')?.addEventListener('click', openModal);
     
-    // Close modals when clicking outside
+    // Close modal when clicking outside
     window.addEventListener('click', (event) => {
-        if (event.target.classList.contains('modal')) {
-            event.target.classList.add('hidden');
+        if (event.target === rentalModal) {
+            closeModal();
         }
     });
 });

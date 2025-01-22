@@ -157,8 +157,8 @@ public class CustomerController {
         }
     }
   
-// Update first name of Customer
-    @PutMapping("/customers/update/{id}")
+//// Update first name of Customer
+    @PutMapping("/customers/update/fn/{id}")
     public ResponseEntity<?> updateCustomerFirstName(
             @PathVariable("id") Short customerId,
             @RequestBody Map<String, String> requestBody) {
@@ -174,12 +174,17 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-   
-    // Update last name of Customer
-    @PutMapping("/customers/update/last-name/{id}/{ln}")
-    public ResponseEntity<?> updateCustomerLastName(@PathVariable("id") Short customerId,
-            @PathVariable("ln") @NotBlank String newLastName) {  
+    
+    @PutMapping("/customers/update/ln/{id}")
+    public ResponseEntity<?> updateCustomerLastName(
+            @PathVariable("id") Short customerId,
+            @RequestBody Map<String, String> requestBody) {
         try {
+            String newLastName = requestBody.get("lastName");
+            if (newLastName == null || newLastName.isBlank()) {
+                return ResponseEntity.badRequest().body("Last name is required");
+            }
+ 
             CustomerDTO updatedCustomer = customerService.updateCustomerLastName(customerId, newLastName);
             return ResponseEntity.ok(updatedCustomer);
         } catch (CustomerNotFoundException e) {

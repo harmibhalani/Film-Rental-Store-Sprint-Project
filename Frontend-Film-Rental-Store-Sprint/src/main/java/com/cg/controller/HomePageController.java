@@ -2,7 +2,10 @@ package com.cg.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.cg.model.ActorSearchModel;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -34,9 +37,6 @@ public class HomePageController {
         return "dashboard"; 
     }
     
-   
-
-    
     @GetMapping("/homePage")
     public String homePage() {
         return "homePage"; 
@@ -51,6 +51,12 @@ public class HomePageController {
     public String shop() {
         return "shop"; 
     }
+    
+    @GetMapping
+	public String showSearchPage(Model model) {
+		model.addAttribute("searchModel", new ActorSearchModel());
+		return "actorSearch";
+	}
     
     @GetMapping("/filmManagement")
     public String filmManagement() {
@@ -87,6 +93,11 @@ public class HomePageController {
     public String inventoryManagement() {
         return "inventoryManagement"; 
     }
+    
+//    @GetMapping("/homePage/dashboard/inventoryManagement")
+//    public String inventoryManagement() {
+//        return "redirect:/homePage/dashboard/inventoryManagement/view";
+//    }
     
     @GetMapping("/paymentManagement")
     public String paymentManagement() {

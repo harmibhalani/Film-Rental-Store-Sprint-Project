@@ -37,15 +37,6 @@ public class RentalController {
         }
     }
  
-    // Update return date
-    @PostMapping("/update/returndate/{rentalId}")
-    public ResponseEntity<Rental> updateReturnDate(@PathVariable("rentalId") Integer rentalId, @RequestBody String newReturnDate) {
-        try {
-            Rental updatedRental = rentalService.updateReturnDate(rentalId, newReturnDate);
-            return ResponseEntity.ok(updatedRental);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
+   
 }
 

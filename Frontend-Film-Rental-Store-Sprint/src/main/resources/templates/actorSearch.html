@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Actor Search</title>
+    <link rel="stylesheet" th:href="@{/css/actorSearch.css}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Actor Search</h1>
+        
+        <form th:action="@{/actorSearch}" method="get" th:object="${searchModel}" class="search-form">
+            <div class="search-container">
+                <input type="text" th:field="*{searchTerm}" class="search-input" placeholder="Enter search term..." />
+                
+                <select th:field="*{searchType}" class="search-type">
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="id">Actor ID</option>
+                </select>
+                
+                <button type="submit" class="search-button">Search</button>
+            </div>
+        </form>
+ 
+        <div th:if="${error}" class="error-message" th:text="${error}"></div>
+ 
+        <!-- Results for firstName and lastName search -->
+        <div th:if="${searchType == 'list'}" class="results-container">
+            <div class="actor-list">
+                <div th:each="actor : ${results}" class="actor-card">
+                    <h3 th:text="${actor.firstName + ' ' + actor.lastName}"></h3>
+                    <p>Actor ID: <span th:text="${actor.actorId}"></span></p>
+                    <p>Last Updated: <span th:text="${actor.lastUpdate}"></span></p>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- Results for actor films search -->
+        <div th:if="${searchType == 'films'}" class="results-container">
+    <div class="actor-films">
+        <div class="actor-info">
+            <h2 th:text="${actor.firstName + ' ' + actor.lastName + '''s Films'}"></h2>
+            <p>Actor ID: <span th:text="${actor.actorId}"></span></p>
+        </div>
+        <div class="films-grid">
+            <!-- Updated to iterate directly over films -->
+            <div th:each="film : ${actor.films}" class="film-card">
+                <h3 th:text="${film.title}"></h3>
+                <p th:text="${film.description}"></p>
+                <div class="film-details">
+                    <p>Release Year: <span th:text="${film.releaseYear}"></span></p>
+                    <p>Rating: <span th:text="${film.rating}"></span></p>
+                    <p>Length: <span th:text="${film.length}"></span> min</p>
+                    <p>Rental Rate: $<span th:text="${film.rentalRate}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script th:src="@{/js/actorSearch.js}"></script>
+</body>
+</html>

@@ -88,11 +88,16 @@ public class StaffController {
 	}
  
 	//Update last name of Staff
-	@PutMapping("/staff/update/ln/{id}")
-	public ResponseEntity<StaffDTO> updateLastName(@PathVariable Short id, @RequestBody String lastName)  {
-		StaffDTO updatedstaff=staffService.updateLastName(id,lastName);
-	    return ResponseEntity.ok(updatedstaff);
-	}
+		@PutMapping("/staff/update/ln/{id}")
+		public ResponseEntity<StaffDTO> updateLastName(@PathVariable Short id,
+		                                                @RequestBody StaffDTO staffDto) {
+		    String lastName = staffDto.getLastName();
+		    if (lastName == null || lastName.isBlank()) {
+		        throw new IllegalArgumentException("Last name is mandatory");
+		    }
+		    StaffDTO updatedStaff = staffService.updateLastName(id, lastName);
+		    return ResponseEntity.ok(updatedStaff);
+		}
  
 	//Update email of Staff
 	@PutMapping("/staff/update/email/{id}")

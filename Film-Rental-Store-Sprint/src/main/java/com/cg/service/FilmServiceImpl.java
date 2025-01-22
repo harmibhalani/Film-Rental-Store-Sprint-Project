@@ -1,6 +1,7 @@
 package com.cg.service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -608,33 +609,45 @@ public class FilmServiceImpl implements FilmService {
 	@Override
 	@Transactional
 	public FilmCategoryDTO updateFilmCategory(Integer filmId, Long categoryId) {
+	    // Check if the film-category relation already exists
+	    String checkQuery = "SELECT COUNT(*) FROM film_category WHERE film_id = :filmId AND category_id = :categoryId";
+	    Query query = entityManager.createNativeQuery(checkQuery);
+	    query.setParameter("filmId", filmId);
+	    query.setParameter("categoryId", categoryId);
 
-		// Check if the film-category relation already exists
-		String checkQuery = "SELECT COUNT(*) FROM film_category WHERE film_id = :filmId AND category_id = :categoryId";
-		Query query = entityManager.createNativeQuery(checkQuery);
-		query.setParameter("filmId", filmId);
-		query.setParameter("categoryId", categoryId);
+	    Long count = ((Number) query.getSingleResult()).longValue();
+	    if (count > 0) {
+	        throw new InvalidInputException("Film is already assigned to this category");
+	    }
 
-		Long count = ((Number) query.getSingleResult()).longValue();
-		if (count > 0) {
-			throw new InvalidInputException("Film is already assigned to this category");
-		}
+	    // Delete existing category for the film (if any)
+	    String deleteQuery = "DELETE FROM film_category WHERE film_id = :filmId";
+	    Query deleteNativeQuery = entityManager.createNativeQuery(deleteQuery);
+	    deleteNativeQuery.setParameter("filmId", filmId);
+	    deleteNativeQuery.executeUpdate();
 
-		// Delete existing category for the film (if any)
-		String deleteQuery = "DELETE FROM film_category WHERE film_id = :filmId";
-		Query deleteNativeQuery = entityManager.createNativeQuery(deleteQuery);
-		deleteNativeQuery.setParameter("filmId", filmId);
-		deleteNativeQuery.executeUpdate();
+	    // Insert new category
+	    String insertQuery = "INSERT INTO film_category (film_id, category_id, last_update) VALUES (:filmId, :categoryId, :lastUpdate)";
+	    Query insertNativeQuery = entityManager.createNativeQuery(insertQuery);
+	    insertNativeQuery.setParameter("filmId", filmId);
+	    insertNativeQuery.setParameter("categoryId", categoryId);
+	    Timestamp currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
+	    insertNativeQuery.setParameter("lastUpdate", currentTimestamp);
+	    insertNativeQuery.executeUpdate();
 
-		// Insert new category
-		String insertQuery = "INSERT INTO film_category (film_id, category_id, last_update) VALUES (:filmId, :categoryId, :lastUpdate)";
-		Query insertNativeQuery = entityManager.createNativeQuery(insertQuery);
-		insertNativeQuery.setParameter("filmId", filmId);
-		insertNativeQuery.setParameter("categoryId", categoryId);
-		insertNativeQuery.setParameter("lastUpdate", LocalDateTime.now());
-		insertNativeQuery.executeUpdate();
+	    // Fetch category name
+	    String categoryNameQuery = "SELECT name FROM category WHERE category_id = :categoryId";
+	    Query nameQuery = entityManager.createNativeQuery(categoryNameQuery);
+	    nameQuery.setParameter("categoryId", categoryId);
+	    String categoryName = (String) nameQuery.getSingleResult();
 
-		return new FilmCategoryDTO();
+	    // Return populated DTO
+	    return new FilmCategoryDTO(
+	        filmId.longValue(),
+	        categoryId,
+	        categoryName,
+	        currentTimestamp
+	    );
 	}
 //    @Override
 //    public FilmCategoryDTO updateFilmCategory(Integer filmId, Integer categoryId) {

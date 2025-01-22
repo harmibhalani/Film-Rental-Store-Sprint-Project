@@ -181,45 +181,59 @@ async function fetchInventoryDetails(inventoryId) {
         showError('Failed to fetch inventory details');
         closeModal();
     }
-}
-async function saveInventory(event) {
-    event.preventDefault();
+}	async function saveInventory(event) {
+	    event.preventDefault();
  
-    const filmId = document.getElementById('filmId').value;
-    const storeId = document.getElementById('storeId').value;
+	    const filmTitle = document.getElementById('filmTitle').value;
+	    const filmId = document.getElementById('filmId').value;
+	    const storeId = document.getElementById('storeId').value;
  
-   
+	    const inventoryData = {
+	        filmTitle: filmTitle,
+	        filmId: parseInt(filmId),
+	        storeId: parseInt(storeId),
+	        lastUpdate: new Date().toISOString()
+	    };
  
-    const inventoryData = {
-        filmId: parseInt(filmId),
-        storeId: parseInt(storeId),
-        lastUpdate: new Date().toISOString()
-    };
+	    try {
+	        const response = await fetch('/homePage/dashboard/inventoryManagement/add', {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            body: JSON.stringify(inventoryData)
+	        });
  
-    try {
-        const response = await fetch('/homePage/dashboard/inventoryManagement/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(inventoryData)
-        });
+	        if (!response.ok) {
+	            throw new Error('Failed to save inventory');
+	        }
  
-        if (!response.ok) {
-            throw new Error('Failed to save inventory');
-        }
+	        const savedInventory = await response.json();
+	        showSuccess('Inventory added successfully!');
+	        closeModal();
+	        
+	        // Refresh the inventory list
+	        searchForm.dispatchEvent(new Event('submit'));
+	    } catch (error) {
+	        console.error('Error:', error);
+	        showError('Failed to save inventory: ' + error.message);
+	    }
+	}
  
-        const savedInventory = await response.json();
-        showSuccess('Inventory added successfully!');
-        closeModal();
-        
-        // Refresh the inventory list
-		searchForm.dispatchEvent(new Event('submit'));
-		} catch (error) {
-		    console.error('Error:', error);
-		    showError('Failed to save inventory: ' + error.message);
-		}
-}
+ 
+	function openModal() {
+	    const modal = document.getElementById('inventoryModal');
+	    modal.classList.remove('hidden');
+	    modal.classList.add('show');
+	}
+ 
+	function closeModal() {
+	    const modal = document.getElementById('inventoryModal');
+	    modal.classList.remove('show');
+	    modal.classList.add('hidden');
+	    document.getElementById('inventoryForm').reset();
+	}
+	
 // Utility Functions
 function formatDate(dateString) {
     return new Date(dateString).toLocaleString();
@@ -250,6 +264,21 @@ function showSuccessMessage(message) {
  
 // Event Listenersdocument.addEventListener('DOMContentLoaded', () => {
 	document.addEventListener('DOMContentLoaded', () => {
+		
+		const addInventoryBtn = document.querySelector('.add-inventory-btn');
+		   const inventoryForm = document.getElementById('inventoryForm');
+		   const modal = document.getElementById('inventoryModal');
+		   
+		   addInventoryBtn.addEventListener('click', openModal);
+ 
+		    // Close modal when clicking outside
+		    modal.addEventListener('click', (e) => {
+		        if (e.target === modal) {
+		            closeModal();
+		        }
+		    });
+ 
+			inventoryForm.addEventListener('submit', saveInventory);
 	    // Load initial data
 	    try {
 	        loadStores();

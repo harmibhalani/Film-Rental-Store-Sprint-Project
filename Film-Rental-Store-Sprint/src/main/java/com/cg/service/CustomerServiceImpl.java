@@ -204,16 +204,29 @@ public class CustomerServiceImpl implements CustomerService {
 
   
 	    //Update last name of Customer
-	    @Override
-	    public CustomerDTO updateCustomerLastName(Short customerId, @NotBlank String newLastName) throws CustomerNotFoundException {
+//Update last name of Customer
+	   
+	   @Override
+	    public CustomerDTO updateCustomerLastName(Short customerId, String newLastName) throws CustomerNotFoundException {
 	        System.out.println("Updating last name for customer ID: " + customerId);
+ 
+	        // Find the customer by ID
 	        Customer customer = customerRepository.findById(customerId)
 	                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+ 
+	        // Update the first name
 	        customer.setLastName(newLastName);
 	        Customer updatedCustomer = customerRepository.save(customer);
-	        System.out.println("Last name updated for customer ID: " + customerId);
  
-	        return new CustomerDTO(updatedCustomer.getCustomerId(), updatedCustomer.getFirstName(), updatedCustomer.getLastName(), updatedCustomer.getEmail());
+	        System.out.println("last name updated for customer ID: " + customerId);
+ 
+	        // Return updated customer details as DTO
+	        return new CustomerDTO(
+	                updatedCustomer.getCustomerId(),
+	                updatedCustomer.getFirstName(),
+	                updatedCustomer.getLastName(),
+	                updatedCustomer.getEmail()
+	        );
 	    }
 	    
 	    //Update email of Customer

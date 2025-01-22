@@ -389,6 +389,9 @@ public class FilmController {
 	           @PathVariable("id") Integer filmId,
 	           @RequestBody FilmCategoryDTO filmCategoryDTO) {
 	       try {
+	           if (filmCategoryDTO.getCategoryId() == null) {
+	               return ResponseEntity.badRequest().body("Category ID is required");
+	           }
 	           FilmCategoryDTO updatedCategory = filmService.updateFilmCategory(filmId, filmCategoryDTO.getCategoryId());
 	           return ResponseEntity.ok(updatedCategory);
 	       } catch (Exception e) {

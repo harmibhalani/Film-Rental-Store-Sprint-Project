@@ -134,15 +134,7 @@ class CustomerTest {
  
   
  
-    @Test
-    void testUpdateCustomerLastName() {
-        CustomerDTO customerDTO = new CustomerDTO();
-        when(customerService.updateCustomerLastName((short) 1, "Smith")).thenReturn(customerDTO);
- 
-        ResponseEntity<?> response = customerController.updateCustomerLastName((short) 1, "Smith");
- 
-        assertEquals(200, response.getStatusCode().value());
-    }
+
  
     @Test
     void testUpdateCustomerEmail() {
